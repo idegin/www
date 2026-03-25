@@ -1,0 +1,6 @@
+- Don't add code comments.
+- Don't add code comments.
+- Don't add code comments.
+- Page routes are in site/app
+- Each page handler.ts file is used to inject data and update the metadata of the page.
+- This is a website for iDegin Technologies Ltd.
