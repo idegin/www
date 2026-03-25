@@ -1,21 +1,53 @@
-<header class="border-b">
-  <nav class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
-      <a href="/" class="text-xl font-bold text-primary">EJS Express Boilerplate</a>
-      <ul class="flex gap-6">
-        <li>
-          <a href="/" class="<%= currentPath === '/' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground' %>">Home</a>
-        </li>
-        <li>
-          <a href="/about-us" class="<%= currentPath === '/about-us' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground' %>">About Us</a>
-        </li>
-        <li>
-          <a href="/services" class="<%= currentPath.startsWith('/services') ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground' %>">Services</a>
-        </li>
-        <li>
-          <a href="/contact-us" class="<%= currentPath === '/contact-us' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground' %>">Contact Us</a>
-        </li>
-      </ul>
+<!-- ==================== Start Navbar ==================== -->
+
+<nav class="navbar navbar-expand-lg static">
+    <div class="container align-items-center">
+
+        <!-- Logo -->
+        <a class="logo w-100px" href="/">
+            <img src="/logo.png" alt="logo">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icon-bar"><i class="fas fa-bars"></i></span>
+        </button>
+
+        <!-- navbar links -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><span class="rolling-text">Home</span></a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about"><span class="rolling-text">About</span></a>
+                </li>
+
+                <!-- 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#leadership">
+                            <span class="rolling-text">
+                                Leadership
+                            </span>
+                        </a> 
+                    </li> 
+                -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact-us"><span class="rolling-text">Contact Us</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dark-mode-icon">
+            <!-- <button type="button" class="theme-icon">
+                <i aria-hidden="true" class="pe-7s-moon moon" title="Toggle between dark and light mode"></i>
+                <i aria-hidden="true" class="pe-7s-sun sun" title="Toggle between dark and light mode"></i>
+            </button> -->
+        </div>
     </div>
-  </nav>
-</header>
+</nav>
+
+<!-- ==================== End Navbar ==================== -->
