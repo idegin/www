@@ -104,16 +104,17 @@ export function SiteFooter() {
       <div className="relative border-t border-white/10">
         <div className="shell flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-2xs uppercase tracking-wider text-ink-400">
-            © 2026 iDegin Technologies Ltd — Engineered in Abuja, Nigeria
+            © 2026 {siteConfig.legalName} — Engineered in{" "}
+            {siteConfig.contact.address.full}
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {LEGAL.map((item) => (
-              <li key={item}>
+            {legalNav.map((item) => (
+              <li key={item.label}>
                 <Link
-                  href="/"
+                  href={item.href}
                   className="font-mono text-2xs uppercase tracking-wider text-ink-400 transition hover:text-ink-200"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               </li>
             ))}

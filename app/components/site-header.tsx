@@ -5,15 +5,12 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { BookCta } from "./book-cta";
 import { IconChevronDown, IconClose, IconMenu, IconSearch } from "./icons";
+import { primaryNav } from "@/lib/site-config";
 
-const NAV = [
-  { label: "Solutions", href: "/solutions", mega: true },
-  { label: "Industries", href: "/industries", mega: false },
-  { label: "Case Studies", href: "/case-studies", mega: false },
-  { label: "Methodology", href: "/methodology", mega: false },
-  { label: "Resources", href: "/resources", mega: false },
-  { label: "About", href: "/about", mega: false },
-];
+const NAV = primaryNav.map((item) => ({
+  ...item,
+  mega: item.label === "Solutions",
+}));
 
 const SOLUTIONS = [
   {
