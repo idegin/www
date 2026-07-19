@@ -1,225 +1,692 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #1b1a28;
+/* ==========================================================================
+   iDegin Technologies — Design Engine (Tailwind v4, CSS-first)
+   Aesthetic: "Operational Blueprint" — signal blue, warm gold, ink & slate,
+   monospace technical annotations. See DESIGN.md for the full system.
+   ========================================================================== */
 
-  --primary: #175cff;
-  --primary-50: #ebf1ff;
-  --primary-100: #d6e2ff;
-  --primary-200: #adc6ff;
-  --primary-300: #85a9ff;
-  --primary-400: #5c8dff;
-  --primary-500: #175cff;
-  --primary-600: #124acc;
-  --primary-700: #0e3899;
-  --primary-800: #092666;
-  --primary-900: #051333;
-  --primary-950: #020a1a;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --accent: #ff3a5a;
-  --accent-50: #fff0f2;
-  --accent-100: #ffe0e5;
-  --accent-200: #ffc2cb;
-  --accent-300: #ffa3b1;
-  --accent-400: #ff667d;
-  --accent-500: #ff3a5a;
-  --accent-600: #cc2e48;
-  --accent-700: #992336;
-  --accent-800: #661724;
-  --accent-900: #330c12;
-  --accent-950: #1a0609;
+/* --------------------------------------------------------------------------
+   1. RAW PALETTE + PRIMITIVES  (static design tokens → Tailwind utilities)
+   -------------------------------------------------------------------------- */
+@theme {
+  /* ---- Primary · Signal Blue (brand #175CFF) --------------------------- */
+  --color-primary-50: #eef3ff;
+  --color-primary-100: #d9e4ff;
+  --color-primary-200: #bbceff;
+  --color-primary-300: #8daeff;
+  --color-primary-400: #5884ff;
+  --color-primary-500: #2e63ff;
+  --color-primary-600: #175cff; /* ← brand primary */
+  --color-primary-700: #0e45db;
+  --color-primary-800: #1039ae;
+  --color-primary-900: #143689;
+  --color-primary-950: #0d1f53;
 
-  --dark: #1b1a28;
-  --dark-50: #e8e8ea;
-  --dark-100: #d1d1d4;
-  --dark-200: #a4a3a9;
-  --dark-300: #76747f;
-  --dark-400: #494754;
-  --dark-500: #1b1a28;
-  --dark-600: #161520;
-  --dark-700: #101018;
-  --dark-800: #0b0a10;
-  --dark-900: #050508;
-  --dark-950: #030304;
+  /* ---- Secondary · Midnight (deep indigo authority / dark surfaces) ---- */
+  --color-midnight-50: #e9ebf2;
+  --color-midnight-100: #c6cbde;
+  --color-midnight-200: #9aa2c0;
+  --color-midnight-300: #6b76a0;
+  --color-midnight-400: #454f7c;
+  --color-midnight-500: #2a3360;
+  --color-midnight-600: #1b2450;
+  --color-midnight-700: #131b40;
+  --color-midnight-800: #0e1533;
+  --color-midnight-900: #0a1028; /* ← primary dark surface */
+  --color-midnight-950: #060a1b;
 
-  --teal: #338889;
-  --teal-50: #eaf3f3;
-  --teal-100: #d6e7e7;
-  --teal-200: #adcaca;
-  --teal-300: #85adad;
-  --teal-400: #5c9191;
-  --teal-500: #338889;
-  --teal-600: #296d6e;
-  --teal-700: #1f5252;
-  --teal-800: #143637;
-  --teal-900: #0a1b1b;
-  --teal-950: #050e0e;
+  /* ---- Tertiary · Solar Gold (warm value / ROI / prestige accent) ------ */
+  --color-gold-50: #fff8eb;
+  --color-gold-100: #fdecc8;
+  --color-gold-200: #fbd98d;
+  --color-gold-300: #f9c24e;
+  --color-gold-400: #f5a623; /* ← accent base */
+  --color-gold-500: #e08a0b;
+  --color-gold-600: #bc6a06;
+  --color-gold-700: #964f0a;
+  --color-gold-800: #7a3f0f;
+  --color-gold-900: #67350f;
+  --color-gold-950: #3b1b05;
 
-  --indigo: #908cb8;
-  --indigo-50: #f4f4f8;
-  --indigo-100: #e9e9f1;
-  --indigo-200: #d3d2e3;
-  --indigo-300: #bcbcd5;
-  --indigo-400: #a6a5c7;
-  --indigo-500: #908cb8;
-  --indigo-600: #737093;
-  --indigo-700: #56546e;
-  --indigo-800: #3a3849;
-  --indigo-900: #1d1c25;
-  --indigo-950: #0f0e12;
+  /* ---- Neutral · Ink/Slate (cool, faint blue undertone) ---------------- */
+  --color-ink-0: #ffffff;
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #edeff4;
+  --color-ink-200: #dde1ea;
+  --color-ink-300: #c3cad8;
+  --color-ink-400: #98a1b4;
+  --color-ink-500: #6c7589;
+  --color-ink-600: #4b5468;
+  --color-ink-700: #363e4f;
+  --color-ink-800: #212734;
+  --color-ink-900: #141821;
+  --color-ink-950: #0a0d14;
 
-  --slate: #aca9bb;
-  --slate-50: #f7f7f8;
-  --slate-100: #efeff1;
-  --slate-200: #dfdee3;
-  --slate-300: #ceccd5;
-  --slate-400: #bdbbc7;
-  --slate-500: #aca9bb;
-  --slate-600: #8a8796;
-  --slate-700: #676570;
-  --slate-800: #45444b;
-  --slate-900: #222225;
-  --slate-950: #111113;
+  /* ---- Semantic · Success / Warning / Danger / Info -------------------- */
+  --color-success-50: #ecfdf3;
+  --color-success-500: #12b76a;
+  --color-success-700: #027a48;
 
-  --ghost: #faf8ff;
-  --ghost-50: #ffffff;
-  --ghost-100: #faf8ff;
-  --ghost-200: #f5f1ff;
-  --ghost-300: #f0eaff;
-  --ghost-400: #ebe3ff;
-  --ghost-500: #e6dcff;
-  --ghost-600: #b8b0cc;
-  --ghost-700: #8a8499;
-  --ghost-800: #5c5866;
-  --ghost-900: #2e2c33;
-  --ghost-950: #17161a;
+  --color-warning-50: #fffaeb;
+  --color-warning-500: #f79009;
+  --color-warning-700: #b54708;
+
+  --color-danger-50: #fef3f2;
+  --color-danger-500: #f04438;
+  --color-danger-700: #b42318;
+
+  --color-info-50: #eef3ff;
+  --color-info-500: #175cff;
+  --color-info-700: #0e45db;
+
+  /* ---- Typography · families ------------------------------------------- */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", "Cascadia Code",
+    "Roboto Mono", monospace;
+
+  /* ---- Typography · fluid type scale (size / line-height / tracking) ---- */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-2xs--letter-spacing: 0.06em;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.125rem;
+  --text-xs--letter-spacing: 0.02em;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.375rem;
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.65rem;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.9rem;
+  --text-xl--letter-spacing: -0.01em;
+
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 2.1rem;
+  --text-2xl--letter-spacing: -0.015em;
+
+  --text-3xl: 2.25rem;
+  --text-3xl--line-height: 2.5rem;
+  --text-3xl--letter-spacing: -0.02em;
+
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 3.15rem;
+  --text-4xl--letter-spacing: -0.025em;
+
+  --text-5xl: 3.75rem;
+  --text-5xl--line-height: 3.9rem;
+  --text-5xl--letter-spacing: -0.03em;
+
+  --text-6xl: 4.75rem;
+  --text-6xl--line-height: 4.85rem;
+  --text-6xl--letter-spacing: -0.035em;
+
+  --text-7xl: 6rem;
+  --text-7xl--line-height: 5.9rem;
+  --text-7xl--letter-spacing: -0.04em;
+
+  /* clamp()-driven display sizes for hero statements */
+  --text-display: clamp(2.75rem, 1.2rem + 6vw, 6rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 600;
+
+  /* ---- Spacing · scale extensions -------------------------------------- */
+  --spacing-4_5: 1.125rem;
+  --spacing-15: 3.75rem;
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+  --spacing-38: 9.5rem;
+  --spacing-section: clamp(4rem, 2rem + 8vw, 9rem);
+  --spacing-section-sm: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+
+  /* ---- Layout · containers & breakpoints ------------------------------- */
+  --breakpoint-xs: 25rem;
+  --container-content: 48rem; /* prose measure */
+  --container-page: 80rem; /* 1280px standard shell */
+  --container-wide: 90rem; /* 1440px full-bleed sections */
+
+  /* ---- Radius ----------------------------------------------------------- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* ---- Elevation · blue-tinted shadows (cohesion with brand) ----------- */
+  --shadow-xs: 0 1px 2px 0 rgb(10 16 40 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(10 16 40 / 0.08), 0 1px 2px -1px rgb(10 16 40 / 0.06);
+  --shadow-md: 0 4px 12px -2px rgb(10 16 40 / 0.1), 0 2px 6px -3px rgb(10 16 40 / 0.08);
+  --shadow-lg: 0 12px 28px -6px rgb(10 16 40 / 0.14), 0 6px 12px -8px rgb(10 16 40 / 0.1);
+  --shadow-xl: 0 24px 56px -12px rgb(10 16 40 / 0.2), 0 10px 24px -12px rgb(10 16 40 / 0.12);
+  --shadow-2xl: 0 40px 90px -20px rgb(10 16 40 / 0.32);
+  --shadow-glow: 0 0 0 1px rgb(23 92 255 / 0.14), 0 12px 40px -8px rgb(23 92 255 / 0.4);
+  --shadow-glow-gold: 0 0 0 1px rgb(245 166 35 / 0.16), 0 12px 40px -8px rgb(245 166 35 / 0.36);
+  --shadow-inset: inset 0 1px 0 0 rgb(255 255 255 / 0.06);
+
+  /* ---- Motion · easings & durations ------------------------------------ */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+  --duration-slower: 720ms;
+
+  /* ---- Motion · keyframed animations ----------------------------------- */
+  --animate-fade-in: fade-in var(--duration-slow) var(--ease-out-quart) both;
+  --animate-fade-up: fade-up var(--duration-slower) var(--ease-out-expo) both;
+  --animate-scale-in: scale-in var(--duration-slow) var(--ease-spring) both;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.6s var(--ease-out-quart) infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-blink: blink 1.15s steps(1) infinite;
+  --animate-dash: dash 2.2s linear infinite;
+  --animate-orbit: orbit 22s linear infinite;
+
+  /* ---- Z-index scale ---------------------------------------------------- */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-overlay: 800;
+  --z-modal: 900;
+  --z-toast: 1000;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgb(23 92 255 / 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 0.75rem rgb(23 92 255 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(23 92 255 / 0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-0.75rem);
+    }
+  }
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    50.01%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
 
+/* --------------------------------------------------------------------------
+   2. SEMANTIC TOKENS  (theme-aware: light default, .dark override)
+   These express intent (surface, text, border) and flip inside .dark sections.
+   -------------------------------------------------------------------------- */
+:root {
+  /* surfaces */
+  --background: var(--color-ink-0);
+  --surface: var(--color-ink-0);
+  --surface-raised: var(--color-ink-0);
+  --surface-sunken: var(--color-ink-50);
+  --surface-muted: var(--color-ink-100);
+  --surface-inverse: var(--color-midnight-900);
+
+  /* text */
+  --text-strong: var(--color-ink-950);
+  --text: var(--color-ink-700);
+  --text-muted: var(--color-ink-500);
+  --text-subtle: var(--color-ink-400);
+  --text-on-brand: var(--color-ink-0);
+  --text-on-inverse: var(--color-ink-50);
+  --text-link: var(--color-primary-600);
+  --text-link-hover: var(--color-primary-700);
+
+  /* borders & lines */
+  --border: var(--color-ink-200);
+  --border-subtle: var(--color-ink-100);
+  --border-strong: var(--color-ink-300);
+  --border-inverse: rgb(255 255 255 / 0.1);
+
+  /* interactive */
+  --ring: var(--color-primary-600);
+  --brand: var(--color-primary-600);
+  --brand-hover: var(--color-primary-700);
+  --accent: var(--color-gold-400);
+
+  /* blueprint grid line color (signature motif) */
+  --grid-line: rgb(10 16 40 / 0.05);
+  --selection-bg: var(--color-primary-600);
+  --selection-fg: var(--color-ink-0);
+}
+
+.dark {
+  --background: var(--color-midnight-900);
+  --surface: var(--color-midnight-900);
+  --surface-raised: var(--color-midnight-800);
+  --surface-sunken: var(--color-midnight-950);
+  --surface-muted: var(--color-midnight-800);
+  --surface-inverse: var(--color-ink-0);
+
+  --text-strong: var(--color-ink-50);
+  --text: var(--color-ink-300);
+  --text-muted: var(--color-ink-400);
+  --text-subtle: var(--color-midnight-300);
+  --text-on-brand: var(--color-ink-0);
+  --text-on-inverse: var(--color-ink-950);
+  --text-link: var(--color-primary-300);
+  --text-link-hover: var(--color-primary-200);
+
+  --border: rgb(255 255 255 / 0.1);
+  --border-subtle: rgb(255 255 255 / 0.06);
+  --border-strong: rgb(255 255 255 / 0.18);
+  --border-inverse: var(--color-ink-200);
+
+  --ring: var(--color-primary-400);
+  --brand: var(--color-primary-500);
+  --brand-hover: var(--color-primary-400);
+
+  --grid-line: rgb(255 255 255 / 0.06);
+  --selection-bg: var(--color-primary-500);
+  --selection-fg: var(--color-ink-0);
+}
+
+/* Map semantic tokens → utilities (bg-surface, text-strong, border-DEFAULT…) */
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-inverse: var(--surface-inverse);
 
-  /* ... previous colors ... */
-  --color-primary-50: var(--primary-50);
-  --color-primary-100: var(--primary-100);
-  --color-primary-200: var(--primary-200);
-  --color-primary-300: var(--primary-300);
-  --color-primary-400: var(--primary-400);
-  --color-primary-500: var(--primary-500);
-  --color-primary-600: var(--primary-600);
-  --color-primary-700: var(--primary-700);
-  --color-primary-800: var(--primary-800);
-  --color-primary-900: var(--primary-900);
-  --color-primary-950: var(--primary-950);
+  --color-strong: var(--text-strong);
+  --color-body: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-on-brand: var(--text-on-brand);
+  --color-on-inverse: var(--text-on-inverse);
+  --color-link: var(--text-link);
+  --color-link-hover: var(--text-link-hover);
 
-  --color-accent-50: var(--accent-50);
-  --color-accent-100: var(--accent-100);
-  --color-accent-200: var(--accent-200);
-  --color-accent-300: var(--accent-300);
-  --color-accent-400: var(--accent-400);
-  --color-accent-500: var(--accent-500);
-  --color-accent-600: var(--accent-600);
-  --color-accent-700: var(--accent-700);
-  --color-accent-800: var(--accent-800);
-  --color-accent-900: var(--accent-900);
-  --color-accent-950: var(--accent-950);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-inverse: var(--border-inverse);
 
-  --color-dark-50: var(--dark-50);
-  --color-dark-100: var(--dark-100);
-  --color-dark-200: var(--dark-200);
-  --color-dark-300: var(--dark-300);
-  --color-dark-400: var(--dark-400);
-  --color-dark-500: var(--dark-500);
-  --color-dark-600: var(--dark-600);
-  --color-dark-700: var(--dark-700);
-  --color-dark-800: var(--dark-800);
-  --color-dark-900: var(--dark-900);
-  --color-dark-950: var(--dark-950);
-
-  --color-teal-50: var(--teal-50);
-  --color-teal-100: var(--teal-100);
-  --color-teal-200: var(--teal-200);
-  --color-teal-300: var(--teal-300);
-  --color-teal-400: var(--teal-400);
-  --color-teal-500: var(--teal-500);
-  --color-teal-600: var(--teal-600);
-  --color-teal-700: var(--teal-700);
-  --color-teal-800: var(--teal-800);
-  --color-teal-900: var(--teal-900);
-  --color-teal-950: var(--teal-950);
-
-  --color-indigo-50: var(--indigo-50);
-  --color-indigo-100: var(--indigo-100);
-  --color-indigo-200: var(--indigo-200);
-  --color-indigo-300: var(--indigo-300);
-  --color-indigo-400: var(--indigo-400);
-  --color-indigo-500: var(--indigo-500);
-  --color-indigo-600: var(--indigo-600);
-  --color-indigo-700: var(--indigo-700);
-  --color-indigo-800: var(--indigo-800);
-  --color-indigo-900: var(--indigo-900);
-  --color-indigo-950: var(--indigo-950);
-
-  --color-slate-50: var(--slate-50);
-  --color-slate-100: var(--slate-100);
-  --color-slate-200: var(--slate-200);
-  --color-slate-300: var(--slate-300);
-  --color-slate-400: var(--slate-400);
-  --color-slate-500: var(--slate-500);
-  --color-slate-600: var(--slate-600);
-  --color-slate-700: var(--slate-700);
-  --color-slate-800: var(--slate-800);
-  --color-slate-900: var(--slate-900);
-  --color-slate-950: var(--slate-950);
-
-  --color-ghost-50: var(--ghost-50);
-  --color-ghost-100: var(--ghost-100);
-  --color-ghost-200: var(--ghost-200);
-  --color-ghost-300: var(--ghost-300);
-  --color-ghost-400: var(--ghost-400);
-  --color-ghost-500: var(--ghost-500);
-  --color-ghost-600: var(--ghost-600);
-  --color-ghost-700: var(--ghost-700);
-  --color-ghost-800: var(--ghost-800);
-  --color-ghost-900: var(--ghost-900);
-  --color-ghost-950: var(--ghost-950);
-
-  --font-sans: "Inter", var(--font-geist-sans), system-ui;
-  --font-display: "Outfit", sans-serif;
-
-  --shadow-premium: 0 20px 50px -12px rgba(27, 26, 40, 0.12);
-  --shadow-glow: 0 0 20px rgba(23, 92, 255, 0.3);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
 }
 
-html {
-  scroll-behavior: smooth;
+/* --------------------------------------------------------------------------
+   3. BASE LAYER  (element defaults, focus, selection, scrollbar)
+   -------------------------------------------------------------------------- */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "ss01";
+    tab-size: 2;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-strong);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::placeholder {
+    color: var(--text-subtle);
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-300);
+    border: 3px solid var(--background);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-400);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+/* --------------------------------------------------------------------------
+   4. COMPONENT CLASSES  (overridable by utilities — e.g. .kicker color)
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* monospace kicker / eyebrow label — the schematic voice */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
 }
 
-.text-gradient-primary {
-  background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+/* --------------------------------------------------------------------------
+   5. SIGNATURE UTILITIES  (the "Operational Blueprint" motifs)
+   -------------------------------------------------------------------------- */
+@layer utilities {
+  /* full-shell horizontal padding container */
+  .shell {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 40rem) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
 
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+  /* blueprint grid background — technical, engineered atmosphere */
+  .blueprint-grid {
+    background-image: linear-gradient(
+        to right,
+        var(--grid-line) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 3rem 3rem;
+  }
 
-.glass-dark {
-  background: rgba(27, 26, 40, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  .blueprint-dots {
+    background-image: radial-gradient(
+      var(--grid-line) 1px,
+      transparent 1px
+    );
+    background-size: 1.5rem 1.5rem;
+  }
+
+  /* brand gradients */
+  .bg-signal {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-primary-600),
+      var(--color-primary-500) 55%,
+      var(--color-primary-400)
+    );
+  }
+  .bg-depth {
+    background-image: linear-gradient(
+      160deg,
+      var(--color-midnight-800),
+      var(--color-midnight-950)
+    );
+  }
+  .bg-aurora {
+    background-image: radial-gradient(
+        60% 60% at 15% 10%,
+        rgb(23 92 255 / 0.28),
+        transparent 60%
+      ),
+      radial-gradient(
+        50% 50% at 90% 20%,
+        rgb(245 166 35 / 0.18),
+        transparent 55%
+      ),
+      radial-gradient(
+        70% 70% at 60% 100%,
+        rgb(14 69 219 / 0.24),
+        transparent 60%
+      );
+  }
+
+  /* gradient text for statement moments (use sparingly) */
+  .text-signal {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-primary-600),
+      var(--color-primary-400)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* fine noise/grain overlay for depth on dark surfaces */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* frosted glass card (sticky header, floating CTA) */
+  .glass {
+    background-color: color-mix(in oklab, var(--surface) 90%, transparent);
+    backdrop-filter: saturate(160%) blur(20px);
+    -webkit-backdrop-filter: saturate(160%) blur(20px);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* staggered reveal helper: set --i on children */
+  .stagger > * {
+    animation: fade-up var(--duration-slower) var(--ease-out-expo) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  /* registration crosshair — schematic corner mark (place absolutely) */
+  .reg-mark {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    color: var(--border-strong);
+  }
+  .reg-mark::before,
+  .reg-mark::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .reg-mark::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+  .reg-mark::after {
+    top: 50%;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+
+  /* terminal caret — the logo's "iDegin_" cursor, carried through the site */
+  .caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.14em;
+    height: 0.92em;
+    margin-left: 0.1em;
+    background: currentColor;
+    vertical-align: -0.08em;
+    animation: var(--animate-blink);
+  }
+
+  /* animated nav underline that draws in from the left */
+  .link-line {
+    position: relative;
+  }
+  .link-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+  .link-line:hover::after,
+  .link-line[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+
+  /* hairline divider tuned to the current theme */
+  .rule {
+    border-color: var(--border);
+  }
 }
