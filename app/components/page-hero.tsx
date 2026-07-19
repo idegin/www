@@ -31,6 +31,7 @@ export function PageHero({
 
   return (
     <section
+      data-hero-tone={dark ? "dark" : "light"}
       className={`relative isolate overflow-hidden ${
         dark ? "dark bg-depth grain" : "bg-surface-sunken"
       }`}

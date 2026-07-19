@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
 import { BookCta } from "./book-cta";
 import { IconChevronDown, IconClose, IconMenu, IconSearch } from "./icons";
@@ -36,9 +37,11 @@ const SOLUTIONS = [
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [heroTone, setHeroTone] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -48,6 +51,18 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const tone = document
+        .querySelector("[data-hero-tone]")
+        ?.getAttribute("data-hero-tone");
+      setHeroTone(tone === "light" ? "light" : "dark");
+      setSolutionsOpen(false);
+      setMobileOpen(false);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
+
+  useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -55,7 +70,7 @@ export function SiteHeader() {
   }, [mobileOpen]);
 
   const solid = scrolled || solutionsOpen;
-  const onDark = !solid;
+  const onDark = !solid && heroTone === "dark";
 
   return (
     <header

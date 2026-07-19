@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "./components/site-header";
 import { SiteFooter } from "./components/site-footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { siteConfig } from "@/lib/site-config";
 import { organizationJsonLd, jsonLdScript } from "@/lib/seo";
 
@@ -82,6 +83,7 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <GoogleAnalytics gaId={siteConfig.analytics.gaId} />
       </body>
     </html>
   );

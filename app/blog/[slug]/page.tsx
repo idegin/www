@@ -59,7 +59,10 @@ export default async function PostPage({ params }: Params) {
       />
 
       <article>
-        <header className="relative bg-surface-sunken pb-8 pt-32 lg:pt-40">
+        <header
+          data-hero-tone="light"
+          className="relative bg-surface-sunken pb-8 pt-32 lg:pt-40"
+        >
           <div
             className="pointer-events-none absolute inset-0 blueprint-dots opacity-40"
             aria-hidden="true"
