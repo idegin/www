@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { PageHero } from "../components/page-hero";
 import { SectionHeader } from "../components/section-header";
@@ -87,6 +87,15 @@ const pods = [
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ])
+        )}
+      />
       <PageHero
         tone="dark"
         code="SEC.ABOUT — Company / iDegin"
@@ -211,20 +220,20 @@ export default function AboutPage() {
               A young company, engineered for scale
             </h2>
           </Reveal>
-          <dl className="mt-12 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 80}>
                 <div>
-                  <dt className="font-mono text-2xs uppercase tracking-[0.2em] text-ink-300">
+                  <p className="font-mono text-2xs uppercase tracking-[0.2em] text-ink-300">
                     {stat.label}
-                  </dt>
-                  <dd className="mt-3 font-display text-3xl font-semibold tabular-nums text-white sm:text-4xl">
+                  </p>
+                  <p className="mt-3 font-display text-3xl font-semibold tabular-nums text-white sm:text-4xl">
                     {stat.value}
-                  </dd>
+                  </p>
                 </div>
               </Reveal>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -264,6 +273,113 @@ export default function AboutPage() {
                 Read our case studies
                 <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="careers" className="relative scroll-mt-24 bg-background">
+        <div className="shell py-section">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+            <Reveal className="lg:col-span-5">
+              <p className="kicker">Careers</p>
+              <h2 className="mt-4 font-display text-3xl font-semibold text-strong sm:text-4xl">
+                Build the systems that run other businesses
+              </h2>
+              <p className="mt-6 text-lg text-body">
+                We hire strategists, engineers, and researchers who would rather
+                ship a system than write a slide. Small pods, real ownership,
+                work that reaches production — and a front-row seat to AI
+                transformation across African industry.
+              </p>
+              <div className="mt-8">
+                <BookCta href={`mailto:${siteConfig.contact.email}?subject=Careers`}>
+                  Introduce yourself
+                </BookCta>
+              </div>
+            </Reveal>
+            <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:col-span-7">
+              {[
+                {
+                  role: "AI Engineers",
+                  body: "Design and ship agent systems, tool integrations, and workflow engines that hold up in production.",
+                },
+                {
+                  role: "Software Engineers",
+                  body: "Build the platforms, APIs, and internal systems our AI employees plug into.",
+                },
+                {
+                  role: "Solutions Strategists",
+                  body: "Run discovery, map operations, and translate business problems into build plans.",
+                },
+                {
+                  role: "Applied Researchers",
+                  body: "Push what autonomous agents can reason about, plan, and safely execute.",
+                },
+              ].map((item, index) => (
+                <Reveal key={item.role} delay={(index % 2) * 80} className="h-full">
+                  <div className="flex h-full flex-col bg-surface p-7">
+                    <span className="font-mono text-2xs tabular-nums tracking-[0.2em] text-brand">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="mt-4 font-display text-xl font-semibold text-strong">
+                      {item.role}
+                    </h3>
+                    <p className="mt-3 flex-1 text-body">{item.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="partners"
+        className="dark relative scroll-mt-24 overflow-hidden bg-depth grain"
+      >
+        <div
+          className="pointer-events-none absolute inset-0 blueprint-grid opacity-40"
+          aria-hidden="true"
+        />
+        <span className="reg-mark left-5 top-6 sm:left-8" aria-hidden="true" />
+        <span className="reg-mark right-5 bottom-6 sm:right-8" aria-hidden="true" />
+        <div className="shell relative grid gap-10 py-section lg:grid-cols-12 lg:items-center">
+          <Reveal className="lg:col-span-6">
+            <p className="kicker text-primary-400">Partners</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold text-white sm:text-4xl">
+              Extend your clients into autonomous operations
+            </h2>
+            <p className="mt-6 text-lg text-ink-300">
+              We work alongside agencies, consultancies, system integrators, and
+              technology vendors who want to bring AI employees and custom
+              software to their clients — without building an engineering pod
+              from scratch. You keep the relationship; we bring the build.
+            </p>
+          </Reveal>
+          <Reveal className="lg:col-span-6" delay={80}>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
+              <ul className="space-y-4">
+                {[
+                  "Co-delivery on AI and software engagements",
+                  "White-label AI employees and automation",
+                  "Referral and revenue-share arrangements",
+                  "Technical due diligence and architecture review",
+                ].map((line) => (
+                  <li key={line} className="flex items-start gap-3 text-ink-200">
+                    <IconArrowRight className="mt-1 h-4 w-4 shrink-0 text-primary-400" />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <BookCta
+                  href={`mailto:${siteConfig.contact.sales}?subject=Partnership`}
+                  variant="solid"
+                >
+                  Explore a partnership
+                </BookCta>
+              </div>
             </div>
           </Reveal>
         </div>

@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import {
+  buildMetadata,
+  breadcrumbJsonLd,
+  serviceListJsonLd,
+  jsonLdScript,
+} from "@/lib/seo";
 import { PageHero } from "../components/page-hero";
 import { SectionHeader } from "../components/section-header";
 import { Reveal } from "../components/reveal";
@@ -20,6 +25,7 @@ export const metadata: Metadata = buildMetadata({
 const CATEGORIES = [
   {
     index: "01",
+    slug: "ai-transformation",
     title: "AI Transformation",
     href: "/methodology",
     problem:
@@ -33,6 +39,7 @@ const CATEGORIES = [
   },
   {
     index: "02",
+    slug: "ai-employees",
     title: "AI Employees",
     href: "/solutions",
     problem:
@@ -46,6 +53,7 @@ const CATEGORIES = [
   },
   {
     index: "03",
+    slug: "ai-agents",
     title: "AI Agents",
     href: "/solutions",
     problem:
@@ -59,6 +67,7 @@ const CATEGORIES = [
   },
   {
     index: "04",
+    slug: "software",
     title: "Software Engineering",
     href: "/solutions",
     problem:
@@ -72,6 +81,7 @@ const CATEGORIES = [
   },
   {
     index: "05",
+    slug: "automation",
     title: "Automation",
     href: "/solutions",
     problem:
@@ -121,6 +131,27 @@ const INCLUDED = [
 export default function SolutionsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Solutions", path: "/solutions" },
+          ])
+        )}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          serviceListJsonLd(
+            CATEGORIES.map((category) => ({
+              name: category.title,
+              description: category.problem,
+              path: `/solutions#${category.slug}`,
+            }))
+          )
+        )}
+      />
       <PageHero
         tone="dark"
         code="SEC.SOL — Solutions / Outcomes"
@@ -144,8 +175,9 @@ export default function SolutionsPage() {
             {CATEGORIES.map((category, index) => (
               <Reveal key={category.title} delay={(index % 3) * 80}>
                 <Link
+                  id={category.slug}
                   href={category.href}
-                  className="group flex h-full flex-col bg-surface p-7 transition hover:-translate-y-1 hover:shadow-lg"
+                  className="group flex h-full scroll-mt-28 flex-col bg-surface p-7 transition hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="flex items-start justify-between">
                     <span className="font-mono text-2xs uppercase tracking-wider text-muted tabular-nums">

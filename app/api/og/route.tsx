@@ -6,10 +6,11 @@ export const runtime = "edge";
 const size = { width: 1200, height: 630 };
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams, origin } = new URL(request.url);
   const title = (searchParams.get("title") ?? siteConfig.tagline).slice(0, 120);
   const kicker = (searchParams.get("kicker") ?? "iDegin Technologies").slice(0, 60);
   const eyebrow = searchParams.get("eyebrow") ?? "AI Transformation Partner";
+  const logoSrc = `${origin}/brand/logo-dark.png`;
 
   return new ImageResponse(
     (
@@ -81,10 +82,8 @@ export async function GET(request: Request) {
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <div style={{ display: "flex", alignItems: "center", fontSize: "40px", fontWeight: 700 }}>
-            iDegin
-            <span style={{ color: "#175cff" }}>_</span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoSrc} alt="iDegin Technologies" height={52} width={225} />
           <div style={{ fontSize: "22px", color: "#98a1b4" }}>
             {siteConfig.contact.address.full}
           </div>

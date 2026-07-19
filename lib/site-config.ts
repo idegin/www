@@ -5,6 +5,7 @@ export const siteConfig = {
   domain: "idegin.com",
   url: "https://idegin.com",
   locale: "en_US",
+  twitter: "@idegin",
   tagline: "Build your AI workforce",
   description:
     "iDegin builds autonomous AI employees and custom software that automate operations, eliminate repetitive work, and help organizations scale without increasing headcount.",
@@ -14,7 +15,7 @@ export const siteConfig = {
     email: "hello@idegin.com",
     sales: "discovery@idegin.com",
     support: "support@idegin.com",
-    phone: "+234 000 000 0000",
+    phone: "",
     address: {
       city: "Abuja",
       region: "FCT",
@@ -64,7 +65,7 @@ export const footerNav = {
     { label: "AI Agents", href: "/solutions#ai-agents" },
     { label: "Automation", href: "/solutions#automation" },
     { label: "Custom Software", href: "/solutions#software" },
-    { label: "Enterprise AI", href: "/solutions#enterprise" },
+    { label: "AI Transformation", href: "/solutions#ai-transformation" },
   ],
   Industries: [
     { label: "Healthcare", href: "/industries" },

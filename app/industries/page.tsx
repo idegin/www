@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo";
 import { PageHero } from "../components/page-hero";
 import { SectionHeader } from "../components/section-header";
 import { Reveal } from "../components/reveal";
@@ -131,6 +131,15 @@ const ENGAGEMENT = [
 export default function IndustriesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Industries", path: "/industries" },
+          ])
+        )}
+      />
       <PageHero
         tone="light"
         code="SEC.IND — Industries / Sector fit"

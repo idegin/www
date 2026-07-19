@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type RevealProps = {
   children: React.ReactNode;
@@ -11,37 +17,40 @@ type RevealProps = {
 
 export function Reveal({ children, delay = 0, className = "", y = 24 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+    if (reduceMotion) {
+      gsap.set(el, { clearProps: "opacity,transform" });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          delay: delay / 1000,
+          ease: "expo.out",
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        }
+      );
+    }, ref);
+
+    return () => ctx.revert();
+  }, [delay, y]);
 
   return (
-    <div
-      ref={ref}
-      style={{
-        transitionDelay: `${delay}ms`,
-        transform: shown ? "translateY(0)" : `translateY(${y}px)`,
-      }}
-      className={`transition-all duration-700 ease-out-expo ${
-        shown ? "opacity-100" : "opacity-0"
-      } ${className}`}
-    >
+    <div ref={ref} className={className} style={{ opacity: 0 }}>
       {children}
     </div>
   );

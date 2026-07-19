@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo";
 import { PageHero } from "../components/page-hero";
 import { SectionHeader } from "../components/section-header";
 import { Reveal } from "../components/reveal";
@@ -130,6 +130,15 @@ const PHASES: Phase[] = [
 export default function MethodologyPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Methodology", path: "/methodology" },
+          ])
+        )}
+      />
       <PageHero
         tone="dark"
         code="SEC.METH — Methodology / Transformation"

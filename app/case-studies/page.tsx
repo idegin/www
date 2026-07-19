@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo";
 import { PageHero } from "../components/page-hero";
 import { SectionHeader } from "../components/section-header";
 import { Reveal } from "../components/reveal";
@@ -60,6 +60,15 @@ const ANATOMY = [
 export default function CaseStudiesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Case Studies", path: "/case-studies" },
+          ])
+        )}
+      />
       <PageHero
         tone="dark"
         code="SEC.CASE — Case Studies / Outcomes"
@@ -83,24 +92,24 @@ export default function CaseStudiesPage() {
               </h2>
             </div>
           </Reveal>
-          <dl className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {METRICS.map((metric, index) => (
               <Reveal key={metric.label} delay={(index % 4) * 80}>
                 <div className="flex flex-col gap-3 border-l border-white/10 pl-6">
-                  <dd
+                  <p
                     className={`font-display text-4xl font-semibold tabular-nums sm:text-5xl ${
                       metric.tone === "accent" ? "text-accent" : "text-brand"
                     }`}
                   >
                     {metric.value}
-                  </dd>
-                  <dt className="font-mono text-2xs uppercase tracking-[0.2em] text-ink-300">
+                  </p>
+                  <p className="font-mono text-2xs uppercase tracking-[0.2em] text-ink-300">
                     {metric.label}
-                  </dt>
+                  </p>
                 </div>
               </Reveal>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -137,7 +146,7 @@ export default function CaseStudiesPage() {
           <Reveal delay={120}>
             <div className="mt-12">
               <Link
-                href="/services"
+                href="/methodology"
                 className="link-line inline-flex items-center gap-2 text-sm font-medium text-brand"
               >
                 See how we deliver each stage

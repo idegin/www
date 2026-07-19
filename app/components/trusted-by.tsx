@@ -37,18 +37,18 @@ export function TrustedBy() {
         <p className="text-center font-mono text-2xs uppercase tracking-[0.2em] text-ink-400">
           Built for operators who measure outcomes
         </p>
-        <dl className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-4">
+        <ul className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-4">
           {SIGNALS.map((signal) => (
-            <div key={signal.k} className="text-center">
-              <dt className="font-display text-4xl font-semibold text-white tabular-nums sm:text-5xl">
+            <li key={signal.k} className="text-center">
+              <p className="font-display text-4xl font-semibold text-white tabular-nums sm:text-5xl">
                 {signal.v}
-              </dt>
-              <dd className="mt-2 font-mono text-2xs uppercase tracking-wider text-ink-400">
+              </p>
+              <p className="mt-2 font-mono text-2xs uppercase tracking-wider text-ink-400">
                 {signal.k}
-              </dd>
-            </div>
+              </p>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

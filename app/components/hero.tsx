@@ -66,12 +66,12 @@ export function Hero() {
                 index === 0 ? "" : "border-l border-white/10"
               } ${index === 2 ? "border-l-0 sm:border-l" : ""}`}
             >
-              <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-400">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-400">
                 {cell.k}
-              </dt>
-              <dd className="mt-1 font-mono text-2xs uppercase tracking-wider text-ink-300">
+              </p>
+              <p className="mt-1 font-mono text-2xs uppercase tracking-wider text-ink-300">
                 {cell.v}
-              </dd>
+              </p>
             </div>
           ))}
         </div>
@@ -104,7 +104,7 @@ export function Hero() {
                 <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition group-hover:border-white/40 group-hover:bg-white/5">
                   <IconPlay className="h-3 w-3 translate-x-px text-white" />
                 </span>
-                Watch 2-min overview
+                See how it works
               </Link>
             </div>
           </div>
@@ -121,23 +121,23 @@ export function Hero() {
           </div>
         </div>
 
-        <dl className="grid grid-cols-3 border-t border-white/10">
+        <ul className="grid grid-cols-3 border-t border-white/10">
           {STATS.map((stat, index) => (
-            <div
+            <li
               key={stat.k}
               className={`px-4 py-4 lg:px-8 ${
                 index === 0 ? "" : "border-l border-white/10"
               }`}
             >
-              <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-400">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-400">
                 {stat.k}
-              </dt>
-              <dd className="mt-1 font-display text-lg font-semibold text-white sm:text-xl">
+              </p>
+              <p className="mt-1 font-display text-lg font-semibold text-white sm:text-xl">
                 {stat.v}
-              </dd>
-            </div>
+              </p>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

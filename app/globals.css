@@ -58,7 +58,7 @@
   --color-ink-200: #dde1ea;
   --color-ink-300: #c3cad8;
   --color-ink-400: #98a1b4;
-  --color-ink-500: #6c7589;
+  --color-ink-500: #656e82;
   --color-ink-600: #4b5468;
   --color-ink-700: #363e4f;
   --color-ink-800: #212734;
@@ -454,8 +454,9 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--ring);
+    outline: 2px solid transparent;
     outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
     border-radius: var(--radius-xs);
   }
 
