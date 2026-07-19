@@ -57,7 +57,8 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
-  const onDark = !scrolled;
+  const solid = scrolled || solutionsOpen;
+  const onDark = !solid;
 
   return (
     <header
@@ -66,7 +67,7 @@ export function SiteHeader() {
         if (event.key === "Escape") setSolutionsOpen(false);
       }}
       className={`fixed inset-x-0 top-0 z-[200] transition duration-200 ${
-        scrolled ? "glass border-b border-border" : "border-b border-transparent"
+        solid ? "glass border-b border-border" : "border-b border-transparent"
       }`}
     >
       <div className="shell flex h-16 items-center justify-between lg:h-20">
@@ -153,7 +154,7 @@ export function SiteHeader() {
       {solutionsOpen ? (
         <div
           id="solutions-menu"
-          className="absolute inset-x-0 top-full hidden border-b border-border glass lg:block"
+          className="absolute inset-x-0 top-full hidden border-b border-border bg-surface shadow-xl lg:block"
         >
           <div className="pointer-events-none absolute inset-0 blueprint-dots opacity-40" aria-hidden="true" />
           <div className="shell relative grid grid-cols-6 gap-8 py-10">

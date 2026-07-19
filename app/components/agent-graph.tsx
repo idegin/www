@@ -32,9 +32,123 @@ function line([a, b]: readonly [string, string]) {
   return { x1: from.x, y1: from.y, x2: to.x, y2: to.y, key: `${a}-${b}` };
 }
 
-export function AgentGraph() {
+function Diagram({ gradientId }: { gradientId: string }) {
   return (
-    <div className="relative rounded-2xl border border-white/10 bg-midnight-900/50 p-5 shadow-2xl backdrop-blur-sm">
+    <div className="relative aspect-4/5 w-full">
+      <svg
+        viewBox="0 0 400 500"
+        fill="none"
+        preserveAspectRatio="xMidYMid meet"
+        className="absolute inset-0 h-full w-full"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#5884ff" stopOpacity="0.7" />
+            <stop offset="1" stopColor="#175cff" stopOpacity="0.15" />
+          </linearGradient>
+        </defs>
+        {MESH_EDGES.map(line).map((l) => (
+          <line
+            key={l.key}
+            x1={l.x1}
+            y1={l.y1}
+            x2={l.x2}
+            y2={l.y2}
+            stroke="#ffffff"
+            strokeOpacity="0.08"
+            strokeWidth="1"
+          />
+        ))}
+        {PRIMARY_EDGES.map(line).map((l) => (
+          <line
+            key={l.key}
+            x1={l.x1}
+            y1={l.y1}
+            x2={l.x2}
+            y2={l.y2}
+            stroke={`url(#${gradientId})`}
+            strokeWidth="1.5"
+            strokeDasharray="5 5"
+            className="animate-dash"
+          />
+        ))}
+      </svg>
+
+      <span
+        className="absolute h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-gold-400/25 animate-orbit"
+        style={{ left: "50%", top: "12.4%" }}
+        aria-hidden="true"
+      />
+
+      {NODES.map((node) => {
+        const isHuman = node.kind === "human";
+        return (
+          <div
+            key={node.id}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{
+              left: `${(node.x / 400) * 100}%`,
+              top: `${(node.y / 500) * 100}%`,
+            }}
+          >
+            <div
+              className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 shadow-lg backdrop-blur-md ${
+                isHuman
+                  ? "border-gold-400/40 bg-midnight-800/90"
+                  : "border-white/10 bg-midnight-800/80"
+              }`}
+            >
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span
+                  className={`absolute inline-flex h-full w-full rounded-full animate-pulse-ring ${
+                    isHuman ? "bg-gold-400" : "bg-primary-500"
+                  }`}
+                />
+                <span
+                  className={`relative inline-flex h-2 w-2 rounded-full ${
+                    isHuman ? "bg-gold-400" : "bg-primary-400"
+                  }`}
+                />
+              </span>
+              <span
+                className={`whitespace-nowrap font-mono text-2xs uppercase tracking-wider ${
+                  isHuman ? "text-gold-200" : "text-ink-200"
+                }`}
+              >
+                {node.label}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+type AgentGraphProps = {
+  bare?: boolean;
+  className?: string;
+  gradientId?: string;
+};
+
+export function AgentGraph({
+  bare = false,
+  className = "",
+  gradientId = "edge",
+}: AgentGraphProps) {
+  if (bare) {
+    return (
+      <div className={`relative ${className}`}>
+        <Diagram gradientId={gradientId} />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`relative rounded-2xl border border-white/10 bg-midnight-900/50 p-5 shadow-2xl backdrop-blur-sm ${className}`}
+    >
       <span className="reg-mark left-2.5 top-2.5" aria-hidden="true" />
       <span className="reg-mark right-2.5 top-2.5" aria-hidden="true" />
       <span className="reg-mark bottom-2.5 left-2.5" aria-hidden="true" />
@@ -48,94 +162,8 @@ export function AgentGraph() {
         </span>
       </div>
 
-      <div className="relative mt-3 aspect-4/5 w-full">
-        <svg
-          viewBox="0 0 400 500"
-          fill="none"
-          preserveAspectRatio="xMidYMid meet"
-          className="absolute inset-0 h-full w-full"
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#5884ff" stopOpacity="0.7" />
-              <stop offset="1" stopColor="#175cff" stopOpacity="0.15" />
-            </linearGradient>
-          </defs>
-          {MESH_EDGES.map(line).map((l) => (
-            <line
-              key={l.key}
-              x1={l.x1}
-              y1={l.y1}
-              x2={l.x2}
-              y2={l.y2}
-              stroke="#ffffff"
-              strokeOpacity="0.08"
-              strokeWidth="1"
-            />
-          ))}
-          {PRIMARY_EDGES.map(line).map((l) => (
-            <line
-              key={l.key}
-              x1={l.x1}
-              y1={l.y1}
-              x2={l.x2}
-              y2={l.y2}
-              stroke="url(#edge)"
-              strokeWidth="1.5"
-              strokeDasharray="5 5"
-              className="animate-dash"
-            />
-          ))}
-        </svg>
-
-        <span
-          className="absolute h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-gold-400/25 animate-orbit"
-          style={{ left: "50%", top: "12.4%" }}
-          aria-hidden="true"
-        />
-
-        {NODES.map((node) => {
-          const isHuman = node.kind === "human";
-          return (
-            <div
-              key={node.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{
-                left: `${(node.x / 400) * 100}%`,
-                top: `${(node.y / 500) * 100}%`,
-              }}
-            >
-              <div
-                className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 shadow-lg backdrop-blur-md ${
-                  isHuman
-                    ? "border-gold-400/40 bg-midnight-800/90"
-                    : "border-white/10 bg-midnight-800/80"
-                }`}
-              >
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span
-                    className={`absolute inline-flex h-full w-full rounded-full animate-pulse-ring ${
-                      isHuman ? "bg-gold-400" : "bg-primary-500"
-                    }`}
-                  />
-                  <span
-                    className={`relative inline-flex h-2 w-2 rounded-full ${
-                      isHuman ? "bg-gold-400" : "bg-primary-400"
-                    }`}
-                  />
-                </span>
-                <span
-                  className={`whitespace-nowrap font-mono text-2xs uppercase tracking-wider ${
-                    isHuman ? "text-gold-200" : "text-ink-200"
-                  }`}
-                >
-                  {node.label}
-                </span>
-              </div>
-            </div>
-          );
-        })}
+      <div className="mt-3">
+        <Diagram gradientId={gradientId} />
       </div>
 
       <div className="mt-3 flex items-center justify-between font-mono text-2xs uppercase tracking-wider text-ink-500">

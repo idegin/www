@@ -75,7 +75,7 @@ export function SiteFooter() {
             AI transformation and custom software engineering. If the software
             your business needs doesn&rsquo;t exist, we build it.
           </p>
-          <p className="mt-6 inline-flex items-center gap-2 font-mono text-2xs uppercase tracking-wider text-ink-500">
+          <p className="mt-6 inline-flex items-center gap-2 font-mono text-2xs uppercase tracking-wider text-ink-400">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-success-500 animate-pulse-ring" />
             All systems operational · Abuja, NG
           </p>
@@ -98,7 +98,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
           {COLUMNS.map((column) => (
             <div key={column.title}>
-              <p className="kicker mb-4 text-ink-500">{column.title}</p>
+              <p className="kicker mb-4 text-ink-400">{column.title}</p>
               <ul className="space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link}>
@@ -118,7 +118,7 @@ export function SiteFooter() {
 
       <div className="relative border-t border-white/10">
         <div className="shell flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-2xs uppercase tracking-wider text-ink-500">
+          <p className="font-mono text-2xs uppercase tracking-wider text-ink-400">
             © 2026 iDegin Technologies Ltd — Engineered in Abuja, Nigeria
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
@@ -126,7 +126,7 @@ export function SiteFooter() {
               <li key={item}>
                 <Link
                   href="/"
-                  className="font-mono text-2xs uppercase tracking-wider text-ink-500 transition hover:text-ink-200"
+                  className="font-mono text-2xs uppercase tracking-wider text-ink-400 transition hover:text-ink-200"
                 >
                   {item}
                 </Link>
