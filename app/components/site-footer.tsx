@@ -2,32 +2,17 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { BookCta } from "./book-cta";
 import { IconGitHub, IconLinkedIn, IconX } from "./icons";
+import { footerNav, legalNav, siteConfig } from "@/lib/site-config";
 
-const COLUMNS = [
-  {
-    title: "Company",
-    links: ["About", "Careers", "Partners", "News", "Contact"],
-  },
-  {
-    title: "Solutions",
-    links: ["AI Employees", "AI Agents", "Automation", "Custom Software", "Enterprise AI"],
-  },
-  {
-    title: "Industries",
-    links: ["Healthcare", "Finance", "Government", "Manufacturing", "Retail", "Education"],
-  },
-  {
-    title: "Resources",
-    links: ["Blog", "Case Studies", "Playbooks", "Whitepapers", "ROI Calculator"],
-  },
-];
-
-const LEGAL = ["Privacy", "Terms", "Security", "Accessibility"];
+const COLUMNS = Object.entries(footerNav).map(([title, links]) => ({
+  title,
+  links,
+}));
 
 const SOCIALS = [
-  { label: "LinkedIn", href: "https://linkedin.com", Icon: IconLinkedIn },
-  { label: "X", href: "https://x.com", Icon: IconX },
-  { label: "GitHub", href: "https://github.com", Icon: IconGitHub },
+  { label: "LinkedIn", href: siteConfig.socials.linkedin, Icon: IconLinkedIn },
+  { label: "X", href: siteConfig.socials.x, Icon: IconX },
+  { label: "GitHub", href: siteConfig.socials.github, Icon: IconGitHub },
 ];
 
 export function SiteFooter() {
@@ -77,7 +62,7 @@ export function SiteFooter() {
           </p>
           <p className="mt-6 inline-flex items-center gap-2 font-mono text-2xs uppercase tracking-wider text-ink-400">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-success-500 animate-pulse-ring" />
-            All systems operational · Abuja, NG
+            All systems operational · {siteConfig.contact.address.full}
           </p>
           <div className="mt-6 flex items-center gap-2">
             {SOCIALS.map(({ label, href, Icon }) => (
@@ -101,12 +86,12 @@ export function SiteFooter() {
               <p className="kicker mb-4 text-ink-400">{column.title}</p>
               <ul className="space-y-2.5">
                 {column.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <Link
-                      href="/"
+                      href={link.href}
                       className="link-line text-sm text-ink-300 transition hover:text-white"
                     >
-                      {link}
+                      {link.label}
                     </Link>
                   </li>
                 ))}
