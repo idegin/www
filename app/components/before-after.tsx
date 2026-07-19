@@ -34,7 +34,7 @@ export function BeforeAfter() {
 
         <div className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-10">
           <div className="flex items-center justify-between font-mono text-2xs uppercase tracking-wider">
-            <span className={t < 0.5 ? "text-danger-500" : "text-muted"}>
+            <span className={t < 0.5 ? "text-danger-700" : "text-muted"}>
               Manual today
             </span>
             <span className={t >= 0.5 ? "text-brand" : "text-muted"}>
@@ -50,6 +50,7 @@ export function BeforeAfter() {
             min={0}
             max={100}
             value={value}
+            aria-valuetext={`${value}% transformed toward an autonomous operation`}
             onChange={(event) => setValue(Number(event.target.value))}
             className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-border accent-primary-600"
           />

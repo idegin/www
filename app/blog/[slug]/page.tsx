@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
-import { buildMetadata, jsonLdScript, ogImageUrl } from "@/lib/seo";
+import {
+  buildMetadata,
+  breadcrumbJsonLd,
+  jsonLdScript,
+  ogImageUrl,
+} from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { PostCover } from "../../components/post-cover";
 import { CtaBand } from "../../components/cta-band";
@@ -45,8 +50,24 @@ export default async function PostPage({ params }: Params) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    author: { "@type": "Organization", name: siteConfig.legalName },
-    publisher: { "@type": "Organization", name: siteConfig.legalName },
+    dateModified: post.date,
+    image: post.thumbnail
+      ? `${siteConfig.url}${post.thumbnail}`
+      : `${siteConfig.url}${ogImageUrl({ title: post.title, kicker: post.category })}`,
+    author: {
+      "@type": "Person",
+      name: post.author,
+      jobTitle: post.authorRole,
+      worksFor: { "@type": "Organization", name: siteConfig.legalName },
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.legalName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/icon-512.png`,
+      },
+    },
     mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
     keywords: post.tags.join(", "),
   };
@@ -56,6 +77,16 @@ export default async function PostPage({ params }: Params) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLdScript(articleJsonLd)}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ])
+        )}
       />
 
       <article>

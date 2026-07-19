@@ -25,10 +25,47 @@ const inputClass =
 
 export function ConsultationForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (pending) return;
+    setError(null);
+    setPending(true);
+
+    const formData = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(body.error ?? "Something went wrong. Please try again.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    } finally {
+      setPending(false);
+    }
+  }
 
   if (submitted) {
     return (
-      <div className="flex h-full flex-col items-start justify-center rounded-2xl border border-border bg-surface p-8 sm:p-10">
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex h-full flex-col items-start justify-center rounded-2xl border border-border bg-surface p-8 sm:p-10"
+      >
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-success-50 text-success-700">
           <IconArrowRight className="h-5 w-5" />
         </span>
@@ -41,7 +78,10 @@ export function ConsultationForm() {
         </p>
         <button
           type="button"
-          onClick={() => setSubmitted(false)}
+          onClick={() => {
+            setSubmitted(false);
+            setError(null);
+          }}
           className="mt-6 font-mono text-2xs uppercase tracking-wider text-brand"
         >
           Submit another request
@@ -52,10 +92,8 @@ export function ConsultationForm() {
 
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        setSubmitted(true);
-      }}
+      onSubmit={handleSubmit}
+      noValidate
       className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
@@ -63,7 +101,14 @@ export function ConsultationForm() {
           <label htmlFor="name" className="text-sm font-medium text-strong">
             Full name
           </label>
-          <input id="name" name="name" required className={inputClass} />
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            className={inputClass}
+          />
         </div>
         <div className="sm:col-span-1">
           <label htmlFor="email" className="text-sm font-medium text-strong">
@@ -73,6 +118,7 @@ export function ConsultationForm() {
             id="email"
             name="email"
             type="email"
+            autoComplete="email"
             required
             className={inputClass}
           />
@@ -81,7 +127,14 @@ export function ConsultationForm() {
           <label htmlFor="company" className="text-sm font-medium text-strong">
             Company
           </label>
-          <input id="company" name="company" required className={inputClass} />
+          <input
+            id="company"
+            name="company"
+            type="text"
+            autoComplete="organization"
+            required
+            className={inputClass}
+          />
         </div>
         <div>
           <label htmlFor="industry" className="text-sm font-medium text-strong">
@@ -126,12 +179,25 @@ export function ConsultationForm() {
         </div>
       </div>
 
+      {error ? (
+        <p
+          role="alert"
+          className="mt-6 rounded-md border border-danger-500/30 bg-danger-50 px-4 py-3 text-sm text-danger-700"
+        >
+          {error}
+        </p>
+      ) : null}
+
       <button
         type="submit"
-        className="group mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-brand px-5 text-sm font-medium text-on-brand shadow-sm transition duration-200 hover:bg-brand-hover hover:shadow-glow sm:w-auto"
+        disabled={pending}
+        aria-busy={pending}
+        className="group mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-brand px-5 text-sm font-medium text-on-brand shadow-sm transition duration-200 hover:bg-brand-hover hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
-        Book my AI Discovery Session
-        <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        {pending ? "Submitting…" : "Book my AI Discovery Session"}
+        {pending ? null : (
+          <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        )}
       </button>
       <p className="mt-4 font-mono text-2xs uppercase tracking-wider text-muted">
         No cost · No obligation · 30 minutes

@@ -54,6 +54,7 @@ export function CostOfInefficiency() {
                   max={input.max}
                   step={input.step}
                   value={values[input.id]}
+                  aria-valuetext={`${values[input.id]} ${input.unit}`}
                   onChange={(event) =>
                     setValues((prev) => ({
                       ...prev,

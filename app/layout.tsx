@@ -5,7 +5,7 @@ import { SiteHeader } from "./components/site-header";
 import { SiteFooter } from "./components/site-footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { siteConfig } from "@/lib/site-config";
-import { organizationJsonLd, jsonLdScript } from "@/lib/seo";
+import { organizationJsonLd, websiteJsonLd, jsonLdScript } from "@/lib/seo";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -48,9 +48,14 @@ export const metadata: Metadata = {
   creator: siteConfig.legalName,
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/icon.svg",
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
@@ -58,7 +63,12 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
-  twitter: { card: "summary_large_image", images: ["/api/og"] },
+  twitter: {
+    card: "summary_large_image",
+    site: siteConfig.twitter,
+    creator: siteConfig.twitter,
+    images: ["/api/og"],
+  },
 };
 
 export const viewport = {
@@ -76,12 +86,24 @@ export default function RootLayout({
       className={`${bricolage.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-body">
+        <a
+          href="#main-content"
+          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[100] focus-visible:rounded-md focus-visible:bg-brand focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-medium focus-visible:text-on-brand"
+        >
+          Skip to main content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={jsonLdScript(organizationJsonLd())}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdScript(websiteJsonLd())}
+        />
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
         <GoogleAnalytics gaId={siteConfig.analytics.gaId} />
       </body>

@@ -24,7 +24,7 @@ export function DiscoveryFramework() {
           {STEPS.map((step) => (
             <li key={step.n} className="relative">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand/40 bg-brand/10 font-mono text-sm text-brand tabular-nums">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand font-mono text-sm font-medium text-on-brand tabular-nums">
                   {step.n}
                 </span>
                 <span className="h-px flex-1 bg-border" aria-hidden="true" />

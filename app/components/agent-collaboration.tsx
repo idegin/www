@@ -19,21 +19,21 @@ export function AgentCollaboration() {
             title="Not a chatbot. An orchestrated team that runs itself"
             intro="Your AI employees don't work in isolation. They coordinate like a real org chart — with a human firmly at the top."
           />
-          <dl className="mt-10 space-y-6">
+          <ul className="mt-10 space-y-6">
             {LAYERS.map((layer, index) => (
-              <div key={layer.k} className="flex gap-5">
+              <li key={layer.k} className="flex gap-5">
                 <span className="mt-0.5 font-mono text-2xs text-brand tabular-nums">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="border-l border-border pl-5">
-                  <dt className="font-display text-lg font-semibold text-strong">
+                  <p className="font-display text-lg font-semibold text-strong">
                     {layer.k}
-                  </dt>
-                  <dd className="mt-1 text-sm text-muted">{layer.v}</dd>
+                  </p>
+                  <p className="mt-1 text-sm text-muted">{layer.v}</p>
                 </div>
-              </div>
+              </li>
             ))}
-          </dl>
+          </ul>
         </div>
 
         <div className="dark relative overflow-hidden rounded-2xl border border-white/10 bg-depth p-6 shadow-2xl grain sm:p-8">

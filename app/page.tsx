@@ -27,7 +27,9 @@ export default function Home() {
     <>
       <Hero />
       <TrustedBy />
-      <CostOfInefficiency />
+      <div id="overview" className="scroll-mt-20">
+        <CostOfInefficiency />
+      </div>
       <Profitability />
       <AiEmployees />
       <AgentCollaboration />
