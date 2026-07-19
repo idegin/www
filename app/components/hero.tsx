@@ -20,7 +20,10 @@ const RULER = [0, 1, 2, 3, 4, 5, 6];
 
 export function Hero() {
   return (
-    <section className="dark relative isolate flex min-h-[92svh] flex-col overflow-hidden bg-depth grain pt-20 lg:pt-24">
+    <section
+      data-hero-tone="dark"
+      className="dark relative isolate flex min-h-[92svh] flex-col overflow-hidden bg-depth grain pt-20 lg:pt-24"
+    >
       <div
         className="pointer-events-none absolute inset-0 blueprint-grid opacity-50"
         aria-hidden="true"

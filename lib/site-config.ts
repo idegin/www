@@ -37,6 +37,10 @@ export const siteConfig = {
     href: "/contact",
     note: "Book an AI Discovery Session",
   },
+
+  analytics: {
+    gaId: "G-QCSRBSNHMQ",
+  },
 } as const;
 
 export const primaryNav = [
