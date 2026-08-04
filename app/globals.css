@@ -572,6 +572,69 @@
     );
   }
 
+  /* Rendered markdown (blog posts) */
+  .prose-content {
+    color: var(--color-muted);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+  .prose-content > * + * {
+    margin-top: 1.25rem;
+  }
+  .prose-content h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin-top: 2.5rem;
+  }
+  .prose-content h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--color-ink);
+    margin-top: 2rem;
+  }
+  .prose-content p,
+  .prose-content ul,
+  .prose-content ol {
+    color: var(--color-muted);
+  }
+  .prose-content strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose-content a {
+    color: var(--color-cobalt-600);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-content a:hover {
+    color: var(--color-cobalt-700);
+  }
+  .prose-content ul,
+  .prose-content ol {
+    padding-left: 1.5rem;
+  }
+  .prose-content ul {
+    list-style: disc;
+  }
+  .prose-content ol {
+    list-style: decimal;
+  }
+  .prose-content li + li {
+    margin-top: 0.5rem;
+  }
+  .prose-content blockquote {
+    border-left: 3px solid var(--color-cobalt-500);
+    padding-left: 1.25rem;
+    font-style: italic;
+    color: var(--color-ink-secondary);
+  }
+
   /* Shimmering sweep highlight (badges, skeletons) */
   .shimmer {
     background: linear-gradient(

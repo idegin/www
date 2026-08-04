@@ -4,7 +4,7 @@
 
 - **Business:** iDegin Technologies — AI Workforce Transformation (autonomous AI employees + custom software for Nigerian mid-sized businesses).
 - **Personality:** intelligent · premium · confident · kinetic · trustworthy · outcome-driven (never childish).
-- **Brand color (sampled from logo):** Electric Cobalt `#1058F8`.
+- **Brand color (exact, sampled from logo):** Cobalt Blue `#175CFF` — the single anchor color. Blue-forward palette; **the purple/iris accent is retired** and the site uses a **light theme** (white/blue), not a dark one. (This overrides the earlier dark-Void + Iris direction throughout this doc: read "Void section" as "light section with a blue node-graph", and ignore Iris references.)
 - **Logo motifs to reuse everywhere:** the **multi-agent node glyph** (connected nodes = AI agents collaborating) and the **terminal underscore `_`** (a blinking cursor — the brand is `iDegin_`). Assets: `public/brand/logo-light.png` (blue mark, for light backgrounds), `public/brand/logo-dark.png` (white mark, for dark backgrounds), `public/brand/favicon.png`.
 - **Fonts:** Display = **Bricolage Grotesque** (Google) · Body/UI = **Geist Sans** (installed) · Mono/labels = **Geist Mono** (installed). None are on the banned list.
 

@@ -75,8 +75,8 @@ export function Hero() {
             variants={item}
             className="mt-6 text-hero font-display font-bold text-ink"
           >
-            Turn a team of 20 into a{" "}
-            <span className="text-gradient-brand">workforce of 500</span>
+            Your Business Doesn't Need More People. It Needs {" "}
+            <span className="text-gradient-brand">Better Systems.</span>
             <span
               className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-[0.08em] animate-blink bg-cobalt-500 align-baseline"
               aria-hidden
@@ -88,9 +88,7 @@ export function Hero() {
             variants={item}
             className="mt-6 max-w-2xl text-body-lg text-muted"
           >
-            {siteConfig.description} We design, deploy, and continuously optimize
-            AI employees that work alongside your team—so you scale output, not
-            headcount.
+            {siteConfig.description}
           </motion.p>
 
           {/* CTAs */}
@@ -136,7 +134,7 @@ export function Hero() {
       {/* Trust marquee */}
       <div className="relative border-t border-line bg-surface-alt/70 py-5 backdrop-blur-sm">
         <div className="container-page flex items-center gap-6">
-          <span className="hidden shrink-0 eyebrow text-placeholder sm:block">
+          <span className="hidden shrink-0 eyebrow text-muted sm:block">
             Built for
           </span>
           <div

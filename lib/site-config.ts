@@ -8,7 +8,7 @@ export const siteConfig = {
   twitter: "@idegin",
   tagline: "Build your AI workforce",
   description:
-    "iDegin builds autonomous AI employees and custom software that automate operations, eliminate repetitive work, and help organizations scale without increasing headcount.",
+    "Most businesses grow by hiring. We help you grow by eliminating repetitive work, improving operational efficiency, and building systems that scale with your business.",
   founded: "2023",
 
   contact: {
