@@ -155,16 +155,47 @@ export function AgentGraph({ className }: { className?: string }) {
     resize();
     window.addEventListener("resize", resize);
 
+    // Pause the animation loop when off-screen or the tab is hidden (saves CPU).
+    let running = false;
+    let onScreen = true;
+    const start = () => {
+      if (running || reduced) return;
+      running = true;
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        if (onScreen && !document.hidden) start();
+        else stop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+
+    const onVisibility = () => {
+      if (!document.hidden && onScreen) start();
+      else stop();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     if (reduced) {
       draw(false);
     } else {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
       window.addEventListener("pointerleave", onPointerLeave);
-      raf = requestAnimationFrame(loop);
+      start();
     }
 
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerleave", onPointerLeave);

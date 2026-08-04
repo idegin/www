@@ -36,8 +36,8 @@ export function SiteHeader() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled || open
-          ? "glass-light border-b border-line bg-white/80"
-          : "border-b border-transparent bg-transparent"
+          ? "glass-light border-b border-line bg-white/85"
+          : "border-b border-transparent bg-white/60 backdrop-blur-sm"
       }`}
     >
       <nav

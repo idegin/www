@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "motion/react";
 import { AgentGraph } from "./agent-graph";
 import { ArrowUpRightIcon, ArrowRightIcon } from "./icons";
 import { industries, siteConfig } from "@/lib/site-config";
@@ -12,30 +9,18 @@ const stats = [
   { value: "4 wks", label: "Audit to deployment" },
 ];
 
+/**
+ * Server-rendered hero. Entrance uses CSS animations (animate-reveal-up) so the
+ * LCP headline paints with the initial HTML instead of waiting on JS hydration.
+ * Reduced motion is honored globally (globals.css).
+ */
 export function Hero() {
-  const reduce = useReducedMotion();
-
-  const container: Variants = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: reduce ? 0 : 0.09, delayChildren: 0.1 },
-    },
-  };
-  const item: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 22 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: reduce ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-
   return (
     <section
       aria-labelledby="hero-heading"
       className="relative isolate overflow-hidden bg-background text-ink"
     >
-      {/* Background layers (light) */}
+      {/* Background layers (light, decorative) */}
       <div
         className="bg-brand-mesh absolute inset-0 -z-10 opacity-70 blur-3xl"
         aria-hidden
@@ -45,21 +30,15 @@ export function Hero() {
         className="bg-grid absolute inset-0 -z-10 text-cobalt-500/60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)]"
         aria-hidden
       />
-      {/* Soft top glow */}
       <div
         className="absolute inset-x-0 top-0 -z-10 h-64 bg-gradient-to-b from-cobalt-50 to-transparent"
         aria-hidden
       />
 
       <div className="container-page flex min-h-[100svh] flex-col justify-center pb-24 pt-36 md:pb-28 md:pt-40">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="max-w-4xl"
-        >
+        <div className="max-w-4xl">
           {/* Eyebrow */}
-          <motion.div variants={item}>
+          <div className="animate-reveal-up" style={{ animationDelay: "0.05s" }}>
             <span className="glass-light inline-flex items-center gap-2 rounded-full px-4 py-1.5 eyebrow text-cobalt-700 shadow-subtle">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-node-pulse rounded-full bg-cobalt-500" />
@@ -67,34 +46,36 @@ export function Hero() {
               </span>
               AI Workforce Transformation
             </span>
-          </motion.div>
+          </div>
 
-          {/* Headline */}
-          <motion.h1
+          {/* Headline (LCP element — paints with the initial HTML) */}
+          <h1
             id="hero-heading"
-            variants={item}
-            className="mt-6 text-hero font-display font-bold text-ink"
+            className="mt-6 animate-reveal-up text-hero font-display font-bold text-ink"
+            style={{ animationDelay: "0.12s" }}
           >
-            Your Business Doesn't Need More People. It Needs {" "}
-            <span className="text-gradient-brand">Better Systems.</span>
+            Transform How Your{" "}
+            <span className="text-gradient-brand">Business Operates.</span>
             <span
               className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-[0.08em] animate-blink bg-cobalt-500 align-baseline"
               aria-hidden
             />
-          </motion.h1>
+          </h1>
 
           {/* Sub-copy */}
-          <motion.p
-            variants={item}
-            className="mt-6 max-w-2xl text-body-lg text-muted"
+          <p
+            className="mt-6 max-w-2xl animate-reveal-up text-body-lg text-muted"
+            style={{ animationDelay: "0.2s" }}
           >
-            {siteConfig.description}
-          </motion.p>
+            {siteConfig.description} We design, deploy, and continuously optimize
+            AI employees that work alongside your team—so you scale output, not
+            headcount.
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            variants={item}
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+          <div
+            className="mt-9 flex animate-reveal-up flex-col gap-3 sm:flex-row sm:items-center"
+            style={{ animationDelay: "0.28s" }}
           >
             <Link
               href={siteConfig.cta.href}
@@ -110,25 +91,23 @@ export function Hero() {
               See the methodology
               <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
-          </motion.div>
+          </div>
 
           {/* Stat chips */}
-          <motion.dl
-            variants={item}
-            className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line"
+          <dl
+            className="mt-14 grid max-w-2xl animate-reveal-up grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line"
+            style={{ animationDelay: "0.36s" }}
           >
             {stats.map((s) => (
               <div key={s.label} className="bg-surface px-5 py-5">
                 <dt className="font-display text-2xl font-bold text-cobalt-600 sm:text-3xl">
                   {s.value}
                 </dt>
-                <dd className="mt-1 text-xs text-muted sm:text-small">
-                  {s.label}
-                </dd>
+                <dd className="mt-1 text-xs text-muted sm:text-small">{s.label}</dd>
               </div>
             ))}
-          </motion.dl>
-        </motion.div>
+          </dl>
+        </div>
       </div>
 
       {/* Trust marquee */}
