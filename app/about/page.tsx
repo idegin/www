@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "../components/page-hero";
 import { Reveal, SectionHeading } from "../components/reveal";
 import { FinalCta } from "../components/final-cta";
 import { JsonLd } from "../components/json-ld";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/jsonld";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata({
   title: "About iDegin",
@@ -132,6 +134,58 @@ export default function AboutPage() {
               into real operations, we help local companies operate with
               world-class efficiency and compete on a bigger stage.
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Careers + Partners */}
+      <section className="bg-background py-20 md:py-24">
+        <div className="container-page grid gap-4 md:grid-cols-2">
+          <Reveal>
+            <div
+              id="careers"
+              className="flex h-full scroll-mt-28 flex-col rounded-2xl border border-line bg-surface-alt p-8"
+            >
+              <span className="eyebrow text-cobalt-600">Careers</span>
+              <h2 className="mt-3 text-subheading font-display font-semibold text-ink">
+                Build the future of work with us
+              </h2>
+              <p className="mt-3 flex-1 text-body text-muted">
+                We&apos;re growing the team that&apos;s bringing AI Workforce
+                Transformation to African businesses. Formal openings are coming
+                soon—if you&apos;re exceptional and mission-aligned, introduce
+                yourself.
+              </p>
+              <Link
+                href={`mailto:${siteConfig.contact.email}?subject=Careers at iDegin`}
+                className="mt-6 inline-flex w-fit items-center gap-2 rounded-md border border-line bg-surface px-5 py-3 text-button text-ink transition-colors hover:border-cobalt-400 hover:bg-cobalt-50"
+              >
+                Introduce yourself
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal index={1}>
+            <div
+              id="partners"
+              className="flex h-full scroll-mt-28 flex-col rounded-2xl border border-cobalt-300 bg-surface p-8 shadow-glow"
+            >
+              <span className="eyebrow text-cobalt-600">Partners</span>
+              <h2 className="mt-3 text-subheading font-display font-semibold text-ink">
+                Partner with iDegin
+              </h2>
+              <p className="mt-3 flex-1 text-body text-muted">
+                We work with technology providers, agencies, and consultants who
+                share our outcome-first approach. Let&apos;s explore how we can
+                deliver more value together.
+              </p>
+              <Link
+                href={siteConfig.cta.href}
+                className="mt-6 inline-flex w-fit items-center gap-2 rounded-md bg-cobalt-500 px-5 py-3 text-button text-white shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:bg-cobalt-600"
+              >
+                Become a partner
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

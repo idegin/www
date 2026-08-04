@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "../components/page-hero";
 import { TransformationIntro } from "../components/transformation-intro";
+import { SolutionBreakdown } from "../components/solution-breakdown";
 import { WhatWeTransform } from "../components/what-we-transform";
 import { Outcomes } from "../components/outcomes";
 import { FinalCta } from "../components/final-cta";
@@ -39,6 +40,7 @@ export default function SolutionsPage() {
         lead="Everything we do falls under a single, end-to-end engagement: AI Workforce Transformation. We design, build, and continuously optimize the AI employees that run your operations."
       />
       <TransformationIntro />
+      <SolutionBreakdown />
       <WhatWeTransform />
       <Outcomes />
       <FinalCta />

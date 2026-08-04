@@ -49,7 +49,7 @@ export type NavItem = { label: string; href: string };
 export const primaryNav: readonly NavItem[] = [
   { label: "Solutions", href: "/solutions" },
   { label: "Industries", href: "/industries" },
-  { label: "Case Studies", href: "/case-studies" },
+  { label: "Playbooks", href: "/playbooks" },
   { label: "Methodology", href: "/methodology" },
   { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
@@ -70,8 +70,9 @@ export const footerNav: Record<string, readonly NavItem[]> = {
   ],
   Resources: [
     { label: "Insights", href: "/resources" },
-    { label: "Case Studies", href: "/case-studies" },
-    { label: "Industries", href: "/industries" },
+    { label: "ROI Calculator", href: "/roi-calculator" },
+    { label: "AI Readiness Assessment", href: "/ai-readiness" },
+    { label: "Playbooks", href: "/playbooks" },
     { label: "FAQ", href: "/contact#faq" },
   ],
   Legal: [

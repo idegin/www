@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "../components/page-hero";
 import { Methodology } from "../components/methodology";
+import { ProcessDetails } from "../components/process-details";
 import { Outcomes } from "../components/outcomes";
 import { FinalCta } from "../components/final-cta";
 import { JsonLd } from "../components/json-ld";
@@ -35,6 +36,7 @@ export default function MethodologyPage() {
         lead="We begin with your business, not the technology. Every engagement follows the same proven path—so you see impact fast and it compounds over time."
       />
       <Methodology />
+      <ProcessDetails />
       <Outcomes />
       <FinalCta />
     </>

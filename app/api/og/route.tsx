@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site-config";
 
@@ -6,12 +8,24 @@ export const runtime = "nodejs";
 const BLUE = "#175cff";
 const INK = "#0a0e1a";
 
+// Embed the brand wordmark (blue mark) as a data URI so it renders in the OG image.
+const LOGO_RATIO = 717 / 166;
+let logoSrc = "";
+try {
+  const buf = readFileSync(join(process.cwd(), "public/brand/logo-light.png"));
+  logoSrc = `data:image/png;base64,${buf.toString("base64")}`;
+} catch {
+  logoSrc = "";
+}
+
 export function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const title = (searchParams.get("title") ?? siteConfig.tagline).slice(0, 120);
   const eyebrow = (searchParams.get("eyebrow") ?? "AI Workforce Transformation")
     .slice(0, 48)
     .toUpperCase();
+
+  const logoHeight = 40;
 
   return new ImageResponse(
     (
@@ -28,35 +42,21 @@ export function GET(req: Request) {
             "radial-gradient(1200px 500px at 15% -10%, rgba(23,92,255,0.14), transparent), radial-gradient(900px 500px at 100% 110%, rgba(18,214,232,0.12), transparent)",
         }}
       >
-        {/* Top: brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <div
-            style={{
-              width: "44px",
-              height: "44px",
-              borderRadius: "12px",
-              background: BLUE,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#fff",
-              fontSize: "26px",
-              fontWeight: 800,
-            }}
-          >
-            iD
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "30px",
-              fontWeight: 800,
-              color: INK,
-            }}
-          >
-            iDegin
-            <span style={{ color: BLUE }}>_</span>
-          </div>
+        {/* Top: brand logo */}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {logoSrc ? (
+            <img
+              src={logoSrc}
+              height={logoHeight}
+              width={Math.round(logoHeight * LOGO_RATIO)}
+              alt="iDegin"
+            />
+          ) : (
+            <div style={{ display: "flex", fontSize: "30px", fontWeight: 800, color: INK }}>
+              iDegin
+              <span style={{ color: BLUE }}>_</span>
+            </div>
+          )}
         </div>
 
         {/* Middle: title */}
@@ -89,7 +89,7 @@ export function GET(req: Request) {
           </div>
         </div>
 
-        {/* Bottom: url */}
+        {/* Bottom: url + CTA */}
         <div
           style={{
             display: "flex",
