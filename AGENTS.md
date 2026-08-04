@@ -1,75 +1,122 @@
-# AGENTS.md — iDegin Technologies Website
+<!-- BEGIN:nextjs-agent-rules -->
 
-Guidance for any agent (or human) working in this repo. Read this first.
+# This is NOT the Next.js you know
 
-## What this is
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
-The marketing website for **iDegin Technologies** — an AI transformation and custom software company based in Abuja, Nigeria. iDegin builds autonomous **AI employees**, multi-agent systems, and custom software. The site positions the company as an **AI Transformation Partner**, not a software vendor.
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-**Every page has one job:** move the visitor toward booking an **AI Discovery Session** (not a quote, not "contact sales").
+<!-- END:nextjs-agent-rules -->
 
-Read alongside this file:
-- **`INFO.md`** — company background, services, methodology, industries (voice & substance).
-- **`PRD.md`** — full site architecture, page-by-page structure, and conversion features.
-- **`DESIGN.md`** — the complete design system ("Operational Blueprint"). **Binding for all UI.**
+# Project overview
 
-## Stack
+Marketing website for **iDegin Technologies**, an AI Workforce Transformation company (see `ABOUT.md`). The primary business goal is lead generation — driving visitors to book an **AI Workflow Audit / Discovery Session**. Information architecture, page inventory, and per-page content are specified in `PLAN.md`; brand voice, positioning, and messaging are in `ABOUT.md`. Read both before writing copy or building a page.
 
-- **Next.js 16** (App Router) · **React 19** · **TypeScript** (strict)
-- **Tailwind CSS v4** (CSS-first config in `app/globals.css` — no `tailwind.config.js`)
-- Fonts via `next/font/google`: **Bricolage Grotesque** (display), **Geist** (body), **Geist Mono** (labels)
-- Import alias: `@/*`
-- Content (blog / insights / resources): **MD/MDX**
+# The mandate
 
-Commands: `npm run dev` · `npm run build` · `npm run start` · `npm run lint`
+**Instruction:** Build a beautiful, $10,000-grade marketing site using every relevant skill and MCP available.
 
-## Non-negotiable rules (from INFO.md)
+**Rules**
+1. Each section's design and layout must differ from the next — no repeated templates.
+2. The site should be image-heavy, including background images.
+3. Sections should have plenty of movement — transitions, animations, and effects.
+4. Use the 21st.dev MCP where it helps.
+5. Every section must be beautiful, professional, and modern — never childish.
 
-1. **No code comments.** Code should be self-explanatory.
-2. **One component per section** — break every section into its own file under `app/components/`.
-3. **Semantic HTML always** (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, ordered headings).
-4. **Publications use MD/MDX** (blog, insights, resources, guides).
-5. **UI must be beautiful and modern** — meet the bar in `DESIGN.md`, never generic.
-6. **Always use the skills in `.claude/skills/`** (see below).
-7. **Dynamically generated OG images** using the brand tokens.
-8. **SEO- and LLM-friendly** — metadata, structured data (JSON-LD), sitemap/robots, clean semantics.
-9. **Accessible** — WCAG 2.2 AA minimum.
+**Requirements**
+1. Advanced SEO.
+2. LLM / AI-agent optimized (`llms.txt`, structured data, clean semantics).
+3. Dynamic OG images and metadata.
+4. Accessibility on all pages and sections (target WCAG AA).
+5. Mobile responsive.
+6. Lots of movement — GSAP is the default motion stack; Framer Motion is acceptable for React-component interactions.
 
-## Design system (must follow)
+# Tech stack
 
-The design system is **"Operational Blueprint"** — signal blue (`#175CFF`) + solar gold accents on ink-and-paper neutrals, monospace technical annotations, blueprint-grid textures. It reads as *consulting authority meets engineering precision*. Full spec in `DESIGN.md`.
+- **Framework:** Next.js `16.3.0`, App Router (`app/`), React `19.2.8`. Read the caveat block at the top of this file — this Next.js differs from training data; consult `node_modules/next/dist/docs/` before using an API.
+- **Language:** TypeScript (`strict`). Path alias `@/*` → repo root (`./*`).
+- **Styling:** Tailwind CSS v4 via `@tailwindcss/postcss` (CSS-first — no `tailwind.config.js`). Design tokens and global styles live in `app/globals.css`.
+- **Fonts:** `next/font/google` — Geist Sans (`--font-geist-sans`) and Geist Mono (`--font-geist-mono`).
+- **Content:** Markdown blog posts in `content/blog/`, parsed with `gray-matter` + `marked`.
 
-Hard rules when building UI:
-- Use **semantic tokens** (`bg-surface`, `text-strong`, `text-body`, `border-border`, `bg-brand`, `text-accent`) — never hard-code hex or reach for raw `ink-*` on theme-able surfaces.
-- Dark sections (hero, footer, dark bands): wrap in `.dark` and semantic tokens invert automatically.
-- Every section opens with a **mono `.kicker`** eyebrow. Metrics use `font-mono` + `tabular-nums`.
-- Headings: `font-display` (Bricolage). Body: `font-sans` (Geist). Labels/data: `font-mono`.
-- One decisive blue accent per view; gold used sparingly (value/ROI). **No purple gradients, no Inter/Roboto/Arial, no stock "AI brain" art.**
-- Primary CTA is always `bg-brand` ("Book Discovery") and always reachable.
-- Respect `prefers-reduced-motion`; prefer one orchestrated page-load reveal over scattered micro-motion.
+# Commands
 
-If you need a new value (color, space, shadow), add it as a **token in `globals.css` first**, then use it.
+```bash
+npm run dev      # start dev server (also regenerates the caveat block above)
+npm run build    # production build — run before declaring UI work done
+npm run start    # serve the production build
+npx tsc --noEmit # type-check (there is no separate lint/test script)
+```
 
-## Skills (use them — rule 6)
+An `eslint.config.mjs` is present; run `npx eslint .` if ESLint is installed. There is no test suite — verify changes with `npm run build` and by loading affected routes.
 
-Located in `.claude/skills/`. Invoke the matching skill before doing the work:
+# Project structure
 
-| Skill | Use when |
-|---|---|
-| `frontend-design` | Building any component/page — sets the aesthetic bar (pairs with `DESIGN.md`). |
-| `ui-section` | Building a specific section/component (hero, features, footer…). |
-| `new-page` | Adding a route under `app/` (static or dynamic). |
-| `seo-metadata` | Metadata, OpenGraph, JSON-LD, sitemap/robots, OG images. |
-| `a11y-check` | Before shipping a page/section — accessibility audit. |
-| `perf-audit` | Performance / Core Web Vitals work. |
+```
+app/                 App Router routes + colocated UI
+  layout.tsx         Root layout: fonts, <html>, global metadata
+  page.tsx           Home page
+  <route>/page.tsx   One folder per route (about, solutions, industries, ...)
+  components/        Shared React components (kebab-case files)
+  api/og/route.tsx   Dynamic OG image generation
+  api/contact|subscribe/route.ts  Form endpoints
+  llms.txt/route.ts  LLM-agent site summary
+  robots.ts | sitemap.ts | manifest.ts  Generated SEO/PWA files
+lib/
+  site-config.ts     Single source of truth: company info, nav, socials, CTA
+  seo.ts             buildMetadata() + ogImageUrl() helpers
+  posts.ts           Blog markdown loading/parsing
+content/blog/        Markdown posts (front matter via gray-matter)
+public/brand/        Logos and brand assets
+```
 
-## Working conventions
+# Conventions & architecture
 
-- **Structure:** routes in `app/`, shared UI in `app/components/`, content in MD/MDX. Server components by default; add `"use client"` only at interactive leaves.
-- **Images:** `next/image` with explicit dimensions + meaningful `alt` (decorative → `alt=""`).
-- **Metadata:** every route exports `metadata`/`generateMetadata` with a unique title + description. Keep the production domain (`https://idegin.com` in `layout.tsx`) in one place.
-- **Before declaring done:** `npm run lint` clean, run the `a11y-check` skill on new UI, and verify it renders (`npm run dev` / the `run` skill). Don't claim a result you didn't verify.
+- **`lib/site-config.ts` is the single source of truth.** Never hardcode company name, URLs, email, phone, nav items, social links, or CTA copy in components — import from `siteConfig`, `primaryNav`, `footerNav`.
+- **Metadata:** Build every page's `metadata` with `buildMetadata()` from `lib/seo.ts` (handles canonical URL, OpenGraph, Twitter, and the dynamic OG image). Don't hand-roll `Metadata` objects per page.
+- **OG images:** Use `ogImageUrl()` / `/api/og` for dynamic social cards; don't ship static per-page OG images unless a page needs a bespoke one.
+- **Server vs. client components:** Default to Server Components. Add `"use client"` only for interactivity/animation, and keep client components small and leaf-level.
+- **Files:** kebab-case for component files (`site-header.tsx`); PascalCase for the exported component. One primary component per file.
+- **Styling:** Tailwind utility classes; use the CSS variables/tokens defined in `app/globals.css` rather than ad-hoc hex values. Keep each section visually distinct (Rule 1).
 
-## Voice
+# Design & content
 
-Confident, outcome-driven, human. Lead with business value, then show the engineering. Mirror `INFO.md`: "We never begin with AI. We begin with your business." Never hype-y; always specific.
+- Follow the project skills and design docs first (`.claude/skills/`, `DESIGN.md` if present), then raise craft with the global UI skills. For any page/section work, invoke the `ui-ux-pro-max` skill before writing UI code.
+- Consult Magic UI / React Bits / 21st.dev MCP for components before hand-rolling.
+- Copy must match the brand voice in `ABOUT.md` — clear, confident, business-outcome-driven; avoid unnecessary jargon. Every page should follow the content arc in `PLAN.md` and end with a clear CTA (default: **Book Discovery** → `/contact`).
+
+## Project skills (in `.claude/skills/`)
+
+Invoke the one that fits before building; they raise the quality bar and encode the house style.
+
+- **`ui-ux-pro-max`** — elite end-to-end UI/UX. Default for any page/section/component build.
+- **`frontend-design`** — distinctive, production-grade frontend that avoids generic AI aesthetics.
+- **`taste-skill`** (`design-taste-frontend`) — anti-slop direction; reads the brief, picks a real design direction, ships non-templated interfaces. Audit-first on redesigns.
+- **`brandkit`** — brand-guideline boards, logo systems, identity/visual-world assets. Use for brand imagery and identity direction.
+- **`redesign-skill`** (`redesign-existing-projects`) — design auditor: audits an existing screen, flags generic AI patterns, and upgrades to premium without breaking functionality. Run it on any section that already exists before iterating.
+- **`emil-design-eng`** — Emil Kowalski's philosophy on UI polish, component design, and animation decisions. Consult for micro-interaction and motion craft.
+
+# Motion — the site must never feel static
+
+Movement is a hard requirement, not a finishing touch (Rules 3 & 6). A section that renders with no motion is incomplete. Every section must combine several of the layers below; no two adjacent sections should animate the same way (Rule 1).
+
+- **Motion stack:** GSAP + ScrollTrigger is the default for scroll-driven and timeline work; Framer Motion (`motion`) for React component interactions and `AnimatePresence` exits. Use `@react-three/fiber` + drei for any 3D/WebGL, and Lottie for vector micro-animations. Reach for the `gsap-scrolltrigger`, `motion-framer`, and `emil-design-eng` skills.
+- **Entrance:** every section reveals on scroll into view — staggered fades/slides/clip reveals, never all-at-once.
+- **Scroll-driven:** parallax backgrounds, pinned/scrubbed sequences, horizontal scroll, or scroll-linked counters where they earn their place. Background images should move (parallax/Ken Burns), not sit flat.
+- **Micro-interactions:** hover, focus, tap, and press states on every interactive element; magnetic buttons, animated underlines, cursor effects where tasteful.
+- **Ambient:** subtle continuous motion (gradient drift, floating shapes, marquees, animated graphs) so the page feels alive at rest.
+- **Page transitions:** animate route changes rather than hard cuts.
+- **Non-negotiables:** honour `prefers-reduced-motion` (provide a calm, reduced variant — reduced, not zero polish), animate only GPU-cheap properties (`transform`/`opacity`), keep 60fps, lazy-init offscreen animations, and never let motion block content or interaction.
+
+# Non-functional requirements (enforce on every page)
+
+- **Accessibility (WCAG AA):** semantic landmarks, one `<h1>` per page and ordered headings, `alt` text on images, visible focus states, labelled form controls, ≥4.5:1 text contrast, keyboard-operable interactions.
+- **SEO:** unique title/description via `buildMetadata`, canonical URL, JSON-LD structured data where relevant, and keep `sitemap.ts` / `robots.ts` accurate when adding routes.
+- **Performance:** use `next/image` for imagery (this is an image-heavy site), lazy-load below-the-fold media, and check the production build for regressions.
+- **Responsive:** mobile-first; verify layouts at mobile, tablet, and desktop widths.
+
+# Workflow & git
+
+- Branch off `main`; do not commit directly to `main`. Only commit/push when the user asks.
+- Keep the auto-generated `nextjs-agent-rules` block at the top of this file committed with your work so the tree stays clean.
+- Before finishing UI work: `npm run build` passes, `npx tsc --noEmit` is clean, and the affected routes render correctly.

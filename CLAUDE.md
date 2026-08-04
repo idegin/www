@@ -1,1 +1,3 @@
 @AGENTS.md
+@PLAN.md
+@ABOUT.md
