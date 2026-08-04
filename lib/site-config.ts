@@ -5,7 +5,7 @@ export const siteConfig = {
   domain: "idegin.com",
   url: "https://idegin.com",
   locale: "en_US",
-  twitter: "@idegin",
+  twitter: "@idegin_tech",
   tagline: "Build your AI workforce",
   description:
     "Most businesses grow by hiring. We help you grow by eliminating repetitive work, improving operational efficiency, and building systems that scale with your business.",
@@ -26,11 +26,12 @@ export const siteConfig = {
   },
 
   socials: {
-    linkedin: "https://linkedin.com/company/idegin",
-    x: "https://x.com/idegin",
+    linkedin: "https://linkedin.com/company/idegin_tech",
+    x: "https://x.com/idegin_tech",
+    // GitHub usernames can't contain underscores; this is the real org (repo owner).
     github: "https://github.com/idegin",
-    youtube: "https://youtube.com/@idegin",
-    instagram: "https://instagram.com/idegin",
+    youtube: "https://youtube.com/@idegin_tech",
+    instagram: "https://instagram.com/idegin_tech",
   },
 
   cta: {
