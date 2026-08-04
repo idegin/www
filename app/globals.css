@@ -1,26 +1,600 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =============================================================================
+   iDegin Technologies — Design System (Tailwind v4, CSS-first)
+   Single source of truth for tokens. Spec: /DESIGN.md
+   Namespaces generate utilities, e.g. --color-cobalt-500 -> bg-cobalt-500 /
+   text-cobalt-500 / border-cobalt-500. --text-hero -> text-hero, etc.
+   ============================================================================= */
+
+@theme {
+  /* ---------------------------------------------------------------------------
+     TYPEFACES
+     next/font exposes --font-geist-sans / --font-geist-mono / --font-bricolage
+     on <html> (see app/layout.tsx).
+     --------------------------------------------------------------------------- */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+  --font-display: var(--font-bricolage), var(--font-geist-sans), ui-sans-serif,
+    system-ui, sans-serif;
+
+  /* ---------------------------------------------------------------------------
+     COLOR — PRIMARY: Electric Cobalt (brand anchor #1058F8)
+     --------------------------------------------------------------------------- */
+  --color-cobalt-50: #eef3ff;
+  --color-cobalt-100: #dbe5ff;
+  --color-cobalt-200: #b7cbff;
+  --color-cobalt-300: #85a6ff;
+  --color-cobalt-400: #4c7cff;
+  --color-cobalt-500: #1058f8;
+  --color-cobalt-600: #0b3fcb;
+  --color-cobalt-700: #0a34a6;
+  --color-cobalt-800: #0a2c85;
+  --color-cobalt-900: #0b255f;
+  --color-cobalt-950: #081640;
+
+  /* COLOR — ACCENT: Iris (violet) — intelligence / methodology */
+  --color-iris-50: #f4efff;
+  --color-iris-100: #ede6ff;
+  --color-iris-200: #dac9ff;
+  --color-iris-300: #bfa1ff;
+  --color-iris-400: #9f6bff;
+  --color-iris-500: #7a3bff;
+  --color-iris-600: #5b21d6;
+  --color-iris-700: #4a19b3;
+  --color-iris-800: #3c1690;
+  --color-iris-900: #2f136e;
+  --color-iris-950: #1e0c48;
+
+  /* COLOR — ACCENT: Aqua (cyan) — network / agents (fills/dark-bg only for text) */
+  --color-aqua-50: #e6fdff;
+  --color-aqua-100: #d9fafe;
+  --color-aqua-200: #b0f4fa;
+  --color-aqua-300: #7debf5;
+  --color-aqua-400: #3adcec;
+  --color-aqua-500: #12d6e8;
+  --color-aqua-600: #0a9fb0;
+  --color-aqua-700: #0b818f;
+  --color-aqua-800: #0d6874;
+  --color-aqua-900: #0f4e58;
+  --color-aqua-950: #0a2f36;
+
+  /* COLOR — ACCENT: Signal Lime — RESERVED for measurable wins/outcomes */
+  --color-lime-50: #fafee9;
+  --color-lime-100: #f0fbd4;
+  --color-lime-200: #e1f7ab;
+  --color-lime-300: #cdf072;
+  --color-lime-400: #b6f03c;
+  --color-lime-500: #9fdb1e;
+  --color-lime-600: #86b81c;
+  --color-lime-700: #6a9016;
+  --color-lime-800: #547016;
+  --color-lime-900: #455c18;
+  --color-lime-950: #253408;
+
+  /* COLOR — ACCENT: Gold Amber — cost/urgency, premium highlights */
+  --color-amber-50: #fff8eb;
+  --color-amber-100: #fff1d6;
+  --color-amber-200: #ffe1a8;
+  --color-amber-300: #ffcd6b;
+  --color-amber-400: #ffb020;
+  --color-amber-500: #f59300;
+  --color-amber-600: #d97800;
+  --color-amber-700: #b5560a;
+  --color-amber-800: #92440e;
+  --color-amber-900: #78380f;
+  --color-amber-950: #451d05;
+
+  /* COLOR — ACCENT: Rose Magenta — pain / "before" states / energy */
+  --color-rose-50: #fff0f5;
+  --color-rose-100: #ffe0ec;
+  --color-rose-200: #ffc2d9;
+  --color-rose-300: #ff94bb;
+  --color-rose-400: #ff6ba1;
+  --color-rose-500: #ff4d8d;
+  --color-rose-600: #e01f6b;
+  --color-rose-700: #bc1557;
+  --color-rose-800: #991248;
+  --color-rose-900: #7e133e;
+  --color-rose-950: #4b0620;
+
+  /* COLOR — NEUTRAL (cool blue-tinted): Paper #f7f9fc -> Void #060910 */
+  --color-neutral-50: #f7f9fc;
+  --color-neutral-100: #f1f3f9;
+  --color-neutral-200: #e5e8f0;
+  --color-neutral-300: #cbcfdd;
+  --color-neutral-400: #a6acc0;
+  --color-neutral-500: #7b8299;
+  --color-neutral-600: #565e76;
+  --color-neutral-700: #2e354b;
+  --color-neutral-800: #1b2236;
+  --color-neutral-900: #0b0f1c;
+  --color-neutral-950: #060910;
+
+  /* COLOR — SEMANTIC: Success (emerald) */
+  --color-success-50: #e6fbf0;
+  --color-success-100: #d1fadf;
+  --color-success-200: #a6f0c4;
+  --color-success-300: #6fe0a3;
+  --color-success-400: #34c77e;
+  --color-success-500: #12b76a;
+  --color-success-600: #0e965a;
+  --color-success-700: #0c7548;
+  --color-success-800: #0d5d3b;
+  --color-success-900: #0c4a31;
+  --color-success-950: #04271a;
+
+  /* COLOR — SEMANTIC: Danger (red) */
+  --color-danger-50: #fef3f2;
+  --color-danger-100: #fee4e2;
+  --color-danger-200: #fecdca;
+  --color-danger-300: #fda29b;
+  --color-danger-400: #f97066;
+  --color-danger-500: #f04438;
+  --color-danger-600: #d92d20;
+  --color-danger-700: #b42318;
+  --color-danger-800: #912018;
+  --color-danger-900: #7a271a;
+  --color-danger-950: #55160c;
+
+  /* ---------------------------------------------------------------------------
+     FLUID TYPE SCALE  (size / line-height / letter-spacing / weight)
+     --------------------------------------------------------------------------- */
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.16em;
+  --text-eyebrow--font-weight: 500;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.02em;
+  --text-caption--font-weight: 500;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-body-lg: clamp(1.0625rem, 1vw + 0.75rem, 1.1875rem);
+  --text-body-lg--line-height: 1.6;
+
+  --text-subheading: clamp(1.375rem, 1.5vw + 0.75rem, 1.625rem);
+  --text-subheading--line-height: 1.25;
+  --text-subheading--letter-spacing: -0.01em;
+  --text-subheading--font-weight: 600;
+
+  --text-heading: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.02em;
+  --text-heading--font-weight: 600;
+
+  --text-display: clamp(2.25rem, 4vw + 1rem, 3.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 700;
+
+  --text-hero: clamp(2.75rem, 6vw + 1rem, 5rem);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.03em;
+  --text-hero--font-weight: 700;
+
+  --text-metric: clamp(2.5rem, 5vw, 3.5rem);
+  --text-metric--line-height: 1;
+  --text-metric--letter-spacing: -0.01em;
+  --text-metric--font-weight: 600;
+
+  /* TRACKING (letter-spacing tokens; overrides Tailwind defaults where named) */
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.08em;
+  --tracking-eyebrow: 0.16em;
+
+  /* ---------------------------------------------------------------------------
+     RADIUS  (per-role scale, see DESIGN.md §5)
+     --------------------------------------------------------------------------- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-3xl: 44px;
+
+  /* ---------------------------------------------------------------------------
+     ELEVATION + GLOW  (ink = rgba(10,14,26,*), never pure black)
+     --------------------------------------------------------------------------- */
+  --shadow-subtle: 0 1px 2px rgba(10, 14, 26, 0.06);
+  --shadow-raised: 0 4px 8px rgba(10, 14, 26, 0.08),
+    0 2px 4px rgba(10, 14, 26, 0.05);
+  --shadow-elevated: 0 12px 24px rgba(10, 14, 26, 0.12),
+    0 4px 8px rgba(10, 14, 26, 0.06);
+  --shadow-floating: 0 24px 48px rgba(10, 14, 26, 0.18),
+    0 8px 16px rgba(10, 14, 26, 0.08);
+  --shadow-glow: 0 0 40px rgba(16, 88, 248, 0.35);
+  --shadow-glow-strong: 0 0 0 1px rgba(16, 88, 248, 0.3),
+    0 0 48px rgba(16, 88, 248, 0.45);
+  --shadow-glow-iris: 0 0 40px rgba(122, 59, 255, 0.4);
+  --shadow-glow-aqua: 0 0 36px rgba(18, 214, 232, 0.4);
+  --shadow-glow-lime: 0 0 36px rgba(182, 240, 60, 0.35);
+
+  /* ---------------------------------------------------------------------------
+     MOTION — easing + animation tokens (see DESIGN.md §7)
+     --------------------------------------------------------------------------- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-blink: blink 1s steps(2, start) infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-slow: marquee 60s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-drift: drift 18s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-gradient: gradient-pan 8s ease infinite;
+  --animate-node-pulse: node-pulse 3s ease-in-out infinite;
+  --animate-aurora: aurora 22s ease-in-out infinite;
+  --animate-reveal-up: reveal-up 0.7s var(--ease-out-expo) both;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(2%, -2%, 0) scale(1.05);
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes gradient-pan {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @keyframes node-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+  @keyframes aurora {
+    0%,
+    100% {
+      transform: translate3d(-4%, 0, 0) rotate(0deg);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translate3d(4%, -3%, 0) rotate(8deg);
+      opacity: 1;
+    }
+  }
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+     BREAKPOINTS — add xs (375px) + 3xl; keep sane defaults for the rest
+     --------------------------------------------------------------------------- */
+  --breakpoint-xs: 23.4375rem;
+  --breakpoint-3xl: 120rem;
 }
 
+/* =============================================================================
+   SEMANTIC ALIASES  — themeable, reference the palette above.
+   Generates bg-background, text-ink, bg-void, bg-paper, border-line, etc.
+   ============================================================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+
+  --color-primary: var(--color-cobalt-500);
+  --color-primary-hover: var(--color-cobalt-600);
+  --color-primary-foreground: #ffffff;
+
+  --color-paper: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-alt: var(--color-neutral-50);
+  --color-void: var(--color-neutral-950);
+  --color-void-soft: var(--color-neutral-900);
+  --color-dark-surface: #10162a;
+
+  --color-ink: var(--color-neutral-950); /* primary text on light */
+  --color-ink-secondary: var(--color-neutral-700); /* secondary text */
+  --color-muted: var(--color-neutral-600); /* tertiary text */
+  --color-placeholder: var(--color-neutral-500);
+  --color-on-dark: #f4f6fb; /* primary text on Void */
+  --color-on-dark-muted: var(--color-neutral-400); /* secondary on Void */
+
+  --color-line: var(--color-neutral-200); /* borders on light */
+  --color-line-subtle: var(--color-neutral-100);
+
+  --color-ring: var(--color-cobalt-500);
+
+  --color-success: var(--color-success-500);
+  --color-danger: var(--color-danger-500);
+  --color-warning: var(--color-amber-700);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =============================================================================
+   BASE LAYER
+   ============================================================================= */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-cobalt-500);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Blue-tinted, unobtrusive scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-300) transparent;
+  }
+
+  /* Honor reduced motion globally (see DESIGN.md §7) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =============================================================================
+   UTILITIES  — reusable, agency-grade building blocks
+   ============================================================================= */
+
+/* Centered page container: 1280px content width with fluid gutters
+   (16px -> 64px across viewport widths). */
+@utility container-page {
+  width: 100%;
+  max-width: 80rem; /* 1280px */
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+
+/* Wide/immersive container: 1440px */
+@utility container-wide {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+
+/* Readable prose measure */
+@utility measure {
+  max-width: 68ch;
+}
+
+/* Mono, uppercase, wide-tracked eyebrow/kicker */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Gradient text — brand (Cobalt -> Iris) */
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-cobalt-500),
+    var(--color-iris-500)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Gradient text — signal (Lime -> Aqua), for wins on dark */
+@utility text-gradient-signal {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-lime-400),
+    var(--color-aqua-500)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Glass panel on Void (dark sections) */
+@utility glass {
+  background-color: color-mix(in srgb, #ffffff 4%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, #ffffff 10%, transparent);
+}
+
+/* Glass panel on Paper (light sections) */
+@utility glass-light {
+  background-color: color-mix(in srgb, #ffffff 65%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--color-line);
+}
+
+/* Blinking terminal cursor (the iDegin_ motif) */
+@utility cursor-blink {
+  display: inline-block;
+  width: 0.08em;
+  background-color: currentColor;
+  animation: var(--animate-blink);
+}
+
+/* =============================================================================
+   COMPONENT-LEVEL DECORATIVE HELPERS (use ::before/::after)
+   ============================================================================= */
+@layer components {
+  /* Deep radial Void backdrop for immersive sections */
+  .bg-void-radial {
+    background: radial-gradient(
+      120% 120% at 50% -10%,
+      var(--color-void-soft) 0%,
+      var(--color-void) 60%
+    );
+  }
+
+  /* Animated Cobalt->Iris brand mesh (ambient life on dark) */
+  .bg-brand-mesh {
+    background:
+      radial-gradient(
+        40% 60% at 20% 20%,
+        color-mix(in srgb, var(--color-cobalt-500) 45%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        45% 55% at 85% 30%,
+        color-mix(in srgb, var(--color-iris-500) 40%, transparent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        50% 50% at 60% 90%,
+        color-mix(in srgb, var(--color-aqua-500) 30%, transparent) 0%,
+        transparent 60%
+      );
+    background-size: 200% 200%;
+    animation: var(--animate-gradient);
+  }
+
+  /* Subtle technical grid — great over Void or Paper */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in srgb, currentColor 8%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, currentColor 8%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 56px 56px;
+  }
+
+  /* Film-grain overlay — apply to a positioned element; add on Void imagery */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Legibility scrim for text over imagery (preserves AA contrast) */
+  .scrim {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(6, 9, 16, 0.2),
+      rgba(6, 9, 16, 0.75)
+    );
+  }
+
+  /* Shimmering sweep highlight (badges, skeletons) */
+  .shimmer {
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      color-mix(in srgb, #ffffff 40%, transparent) 50%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
 }
