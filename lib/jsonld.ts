@@ -100,5 +100,42 @@ export function serviceSchema() {
   };
 }
 
+export function personSchema(p: {
+  name: string;
+  role: string;
+  company: string;
+  companyUrl: string;
+  slug: string;
+  image: string;
+  bio: string;
+  born: { date: string; place: string };
+  education: { degree: string; school: string }[];
+  focus: string[];
+  socials: { linkedin?: string; github?: string; website?: string };
+}) {
+  const sameAs = [p.socials.linkedin, p.socials.github, p.socials.website].filter(
+    Boolean,
+  ) as string[];
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: p.name,
+    jobTitle: p.role,
+    description: p.bio,
+    image: `${siteConfig.url}${p.image}`,
+    url: `${siteConfig.url}/${p.slug}`,
+    birthDate: p.born.date,
+    birthPlace: { "@type": "Place", name: p.born.place },
+    worksFor: { "@type": "Organization", name: p.company, url: p.companyUrl },
+    alumniOf: p.education.map((e) => ({
+      "@type": "EducationalOrganization",
+      name: e.school,
+    })),
+    knowsAbout: p.focus,
+    nationality: { "@type": "Country", name: "Nigeria" },
+    ...(sameAs.length ? { sameAs } : {}),
+  };
+}
+
 /** Serializable JSON-LD props for the <JsonLd> component. */
 export type JsonLdData = Record<string, unknown>;

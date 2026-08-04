@@ -38,6 +38,9 @@ ${playbooks.map((p) => `- [${p.title}](${u(`/playbooks/${p.slug}`)}): ${p.excerp
 ## Insights
 ${posts.map((p) => `- [${p.title}](${u(`/resources/${p.slug}`)}): ${p.excerpt}`).join("\n")}
 
+## People
+- [Ifeora Emeka — Founder & CEO](${u("/ifeora-emeka")}): founder of Onita AI, building the AI workforce for African businesses. Structured profile at ${u("/api/ifeora-emeka")}
+
 ## Contact
 - [Email ${siteConfig.contact.email}](mailto:${siteConfig.contact.email})
 - [Website](${siteConfig.url})
