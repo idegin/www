@@ -31,6 +31,11 @@ export function GET() {
       socials: p.socials,
       bio: p.bio,
     },
-    { headers: { "Cache-Control": "public, max-age=3600" } },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=604800",
+        "Access-Control-Allow-Origin": "*",
+      },
+    },
   );
 }
