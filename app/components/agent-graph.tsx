@@ -13,9 +13,9 @@ type Node = {
 };
 
 const COLORS = [
-  { r: 76, g: 124, b: 255 }, // cobalt-400
-  { r: 18, g: 214, b: 232 }, // aqua-500
-  { r: 159, g: 107, b: 255 }, // iris-400
+  { r: 23, g: 92, b: 255 }, // cobalt-500 (exact brand blue)
+  { r: 83, g: 134, b: 255 }, // cobalt-400
+  { r: 10, g: 159, b: 176 }, // aqua-600 (darker, visible on light)
 ];
 
 /**
@@ -87,8 +87,8 @@ export function AgentGraph({ className }: { className?: string }) {
           const dy = a.y - b.y;
           const dist = Math.hypot(dx, dy);
           if (dist < LINK_DIST) {
-            const alpha = (1 - dist / LINK_DIST) * 0.5;
-            ctx.strokeStyle = `rgba(90, 150, 255, ${alpha})`;
+            const alpha = (1 - dist / LINK_DIST) * 0.32;
+            ctx.strokeStyle = `rgba(23, 92, 255, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);

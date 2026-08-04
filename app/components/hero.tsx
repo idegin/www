@@ -33,21 +33,21 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="bg-void-radial relative isolate overflow-hidden text-on-dark"
+      className="relative isolate overflow-hidden bg-background text-ink"
     >
-      {/* Background layers */}
-      <AgentGraph className="absolute inset-0 -z-10 h-full w-full opacity-70" />
+      {/* Background layers (light) */}
       <div
-        className="bg-brand-mesh absolute inset-0 -z-10 opacity-60 blur-3xl"
+        className="bg-brand-mesh absolute inset-0 -z-10 opacity-70 blur-3xl"
         aria-hidden
       />
+      <AgentGraph className="absolute inset-0 -z-10 h-full w-full opacity-60" />
       <div
-        className="bg-grid absolute inset-0 -z-10 text-white/60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
+        className="bg-grid absolute inset-0 -z-10 text-cobalt-500/60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)]"
         aria-hidden
       />
-      {/* Bottom fade into the next (light) section */}
+      {/* Soft top glow */}
       <div
-        className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-void"
+        className="absolute inset-x-0 top-0 -z-10 h-64 bg-gradient-to-b from-cobalt-50 to-transparent"
         aria-hidden
       />
 
@@ -60,10 +60,10 @@ export function Hero() {
         >
           {/* Eyebrow */}
           <motion.div variants={item}>
-            <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 eyebrow text-on-dark-muted">
+            <span className="glass-light inline-flex items-center gap-2 rounded-full px-4 py-1.5 eyebrow text-cobalt-700 shadow-subtle">
               <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-node-pulse rounded-full bg-aqua-500" />
-                <span className="relative inline-flex size-2 rounded-full bg-aqua-500" />
+                <span className="absolute inline-flex size-full animate-node-pulse rounded-full bg-cobalt-500" />
+                <span className="relative inline-flex size-2 rounded-full bg-cobalt-500" />
               </span>
               AI Workforce Transformation
             </span>
@@ -73,12 +73,12 @@ export function Hero() {
           <motion.h1
             id="hero-heading"
             variants={item}
-            className="mt-6 text-hero font-display font-bold text-on-dark"
+            className="mt-6 text-hero font-display font-bold text-ink"
           >
             Turn a team of 20 into a{" "}
             <span className="text-gradient-brand">workforce of 500</span>
             <span
-              className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-[0.08em] animate-blink bg-cobalt-400 align-baseline"
+              className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-[0.08em] animate-blink bg-cobalt-500 align-baseline"
               aria-hidden
             />
           </motion.h1>
@@ -86,7 +86,7 @@ export function Hero() {
           {/* Sub-copy */}
           <motion.p
             variants={item}
-            className="mt-6 max-w-2xl text-body-lg text-on-dark-muted"
+            className="mt-6 max-w-2xl text-body-lg text-muted"
           >
             {siteConfig.description} We design, deploy, and continuously optimize
             AI employees that work alongside your team—so you scale output, not
@@ -100,14 +100,14 @@ export function Hero() {
           >
             <Link
               href={siteConfig.cta.href}
-              className="group inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3.5 text-button text-ink shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:shadow-glow-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt-300"
+              className="group inline-flex items-center justify-center gap-2 rounded-md bg-cobalt-500 px-6 py-3.5 text-button text-white shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:bg-cobalt-600 hover:shadow-glow-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt-500"
             >
               {siteConfig.cta.label}
               <ArrowUpRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
             <Link
               href="/methodology"
-              className="group inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3.5 text-button text-on-dark transition-colors duration-200 hover:border-cobalt-400 hover:bg-white/5"
+              className="group inline-flex items-center justify-center gap-2 rounded-md border border-line bg-white/60 px-6 py-3.5 text-button text-ink transition-colors duration-200 hover:border-cobalt-400 hover:bg-cobalt-50"
             >
               See the methodology
               <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -117,14 +117,14 @@ export function Hero() {
           {/* Stat chips */}
           <motion.dl
             variants={item}
-            className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/5"
+            className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line"
           >
             {stats.map((s) => (
-              <div key={s.label} className="bg-void/40 px-5 py-5">
-                <dt className="font-display text-2xl font-bold text-on-dark sm:text-3xl">
+              <div key={s.label} className="bg-surface px-5 py-5">
+                <dt className="font-display text-2xl font-bold text-cobalt-600 sm:text-3xl">
                   {s.value}
                 </dt>
-                <dd className="mt-1 text-xs text-on-dark-muted sm:text-small">
+                <dd className="mt-1 text-xs text-muted sm:text-small">
                   {s.label}
                 </dd>
               </div>
@@ -134,9 +134,9 @@ export function Hero() {
       </div>
 
       {/* Trust marquee */}
-      <div className="relative border-t border-white/10 bg-void/50 py-5 backdrop-blur-sm">
+      <div className="relative border-t border-line bg-surface-alt/70 py-5 backdrop-blur-sm">
         <div className="container-page flex items-center gap-6">
-          <span className="hidden shrink-0 eyebrow text-on-dark-muted sm:block">
+          <span className="hidden shrink-0 eyebrow text-placeholder sm:block">
             Built for
           </span>
           <div
@@ -147,7 +147,7 @@ export function Hero() {
               {[...industries, ...industries].map((name, i) => (
                 <span
                   key={`${name}-${i}`}
-                  className="whitespace-nowrap text-small font-medium text-on-dark-muted"
+                  className="whitespace-nowrap text-small font-medium text-muted"
                 >
                   {name}
                 </span>

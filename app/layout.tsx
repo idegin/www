@@ -40,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-void">
+      <body className="flex min-h-full flex-col bg-background">
         <a
           href="#main"
           className="sr-only rounded-md bg-white px-4 py-2 text-button text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]"

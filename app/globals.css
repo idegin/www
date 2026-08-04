@@ -23,30 +23,17 @@
   /* ---------------------------------------------------------------------------
      COLOR — PRIMARY: Electric Cobalt (brand anchor #1058F8)
      --------------------------------------------------------------------------- */
-  --color-cobalt-50: #eef3ff;
-  --color-cobalt-100: #dbe5ff;
-  --color-cobalt-200: #b7cbff;
-  --color-cobalt-300: #85a6ff;
-  --color-cobalt-400: #4c7cff;
-  --color-cobalt-500: #1058f8;
-  --color-cobalt-600: #0b3fcb;
-  --color-cobalt-700: #0a34a6;
-  --color-cobalt-800: #0a2c85;
-  --color-cobalt-900: #0b255f;
-  --color-cobalt-950: #081640;
-
-  /* COLOR — ACCENT: Iris (violet) — intelligence / methodology */
-  --color-iris-50: #f4efff;
-  --color-iris-100: #ede6ff;
-  --color-iris-200: #dac9ff;
-  --color-iris-300: #bfa1ff;
-  --color-iris-400: #9f6bff;
-  --color-iris-500: #7a3bff;
-  --color-iris-600: #5b21d6;
-  --color-iris-700: #4a19b3;
-  --color-iris-800: #3c1690;
-  --color-iris-900: #2f136e;
-  --color-iris-950: #1e0c48;
+  --color-cobalt-50: #edf3ff;
+  --color-cobalt-100: #dae6ff;
+  --color-cobalt-200: #bad0ff;
+  --color-cobalt-300: #8eb0ff;
+  --color-cobalt-400: #5386ff;
+  --color-cobalt-500: #175cff; /* EXACT brand blue, sampled from the logo */
+  --color-cobalt-600: #0e45db;
+  --color-cobalt-700: #0f37ae;
+  --color-cobalt-800: #133088;
+  --color-cobalt-900: #142b6b;
+  --color-cobalt-950: #0d1940;
 
   /* COLOR — ACCENT: Aqua (cyan) — network / agents (fills/dark-bg only for text) */
   --color-aqua-50: #e6fdff;
@@ -213,10 +200,9 @@
     0 4px 8px rgba(10, 14, 26, 0.06);
   --shadow-floating: 0 24px 48px rgba(10, 14, 26, 0.18),
     0 8px 16px rgba(10, 14, 26, 0.08);
-  --shadow-glow: 0 0 40px rgba(16, 88, 248, 0.35);
-  --shadow-glow-strong: 0 0 0 1px rgba(16, 88, 248, 0.3),
-    0 0 48px rgba(16, 88, 248, 0.45);
-  --shadow-glow-iris: 0 0 40px rgba(122, 59, 255, 0.4);
+  --shadow-glow: 0 0 40px rgba(23, 92, 255, 0.32);
+  --shadow-glow-strong: 0 0 0 1px rgba(23, 92, 255, 0.28),
+    0 0 48px rgba(23, 92, 255, 0.42);
   --shadow-glow-aqua: 0 0 36px rgba(18, 214, 232, 0.4);
   --shadow-glow-lime: 0 0 36px rgba(182, 240, 60, 0.35);
 
@@ -463,12 +449,12 @@
   text-transform: uppercase;
 }
 
-/* Gradient text — brand (Cobalt -> Iris) */
+/* Gradient text — brand (deep blue -> brand blue); legible on light backgrounds */
 @utility text-gradient-brand {
   background-image: linear-gradient(
-    135deg,
-    var(--color-cobalt-500),
-    var(--color-iris-500)
+    120deg,
+    var(--color-cobalt-700),
+    var(--color-cobalt-500)
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -524,22 +510,22 @@
     );
   }
 
-  /* Animated Cobalt->Iris brand mesh (ambient life on dark) */
+  /* Animated blue brand mesh — soft blue/cyan washes (works on light) */
   .bg-brand-mesh {
     background:
       radial-gradient(
-        40% 60% at 20% 20%,
-        color-mix(in srgb, var(--color-cobalt-500) 45%, transparent) 0%,
+        45% 60% at 15% 12%,
+        color-mix(in srgb, var(--color-cobalt-500) 22%, transparent) 0%,
         transparent 60%
       ),
       radial-gradient(
-        45% 55% at 85% 30%,
-        color-mix(in srgb, var(--color-iris-500) 40%, transparent) 0%,
+        45% 55% at 85% 15%,
+        color-mix(in srgb, var(--color-aqua-500) 16%, transparent) 0%,
         transparent 60%
       ),
       radial-gradient(
         50% 50% at 60% 90%,
-        color-mix(in srgb, var(--color-aqua-500) 30%, transparent) 0%,
+        color-mix(in srgb, var(--color-cobalt-400) 18%, transparent) 0%,
         transparent 60%
       );
     background-size: 200% 200%;
